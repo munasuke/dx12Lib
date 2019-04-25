@@ -3,7 +3,10 @@
 [RootSignature(RS)]
 Out main(Input input)
 {
-	Out o;
+    Out o;
+    o.svpos = input.pos;
+    o.pos   = input.pos;
+    o.uv    = input.uv;
 
 	return o;
 }

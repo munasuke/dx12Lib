@@ -1,6 +1,7 @@
 // ルートシグネチャの定義
 #define RS "RootFlags(ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT),"\
-                    "DescriptorTable(SRV(t0, numDescriptors = 1, space = 0, offset = DESCRIPTOR_RANGE_OFFSET_APPEND),"\
+                    "DescriptorTable(SRV(t0, numDescriptors = 1, space = 0, offset = DESCRIPTOR_RANGE_OFFSET_APPEND), "\
+                                    "visibility = SHADER_VISIBILITY_ALL),"\
                     "StaticSampler(s0, "\
                                   "filter         = FILTER_MIN_MAG_MIP_LINEAR, "\
                                   "addressU       = TEXTURE_ADDRESS_WRAP, "\
