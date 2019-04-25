@@ -16,6 +16,7 @@ Descriptor & Descriptor::Get()
 	return instance;
 }
 
+// ヒープ生成
 long Descriptor::CreateHeap(ID3D12DescriptorHeap** heap, const D3D12_DESCRIPTOR_HEAP_TYPE& type, 
 	const D3D12_DESCRIPTOR_HEAP_FLAGS& flag, const size_t& descriptorNum)
 {
@@ -34,6 +35,7 @@ long Descriptor::CreateHeap(ID3D12DescriptorHeap** heap, const D3D12_DESCRIPTOR_
 	return hr;
 }
 
+// リソース生成
 long Descriptor::CreateRsc(ID3D12Resource** rsc, const D3D12_HEAP_PROPERTIES& hprop, D3D12_RESOURCE_DESC& dsc, 
 	const D3D12_RESOURCE_STATES& state, const D3D12_CLEAR_VALUE* clear)
 {
@@ -46,6 +48,7 @@ long Descriptor::CreateRsc(ID3D12Resource** rsc, const D3D12_HEAP_PROPERTIES& hp
 	return hr;
 }
 
+// RTV生成
 void Descriptor::RTV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index)
 {
 	D3D12_RENDER_TARGET_VIEW_DESC dsc{};
@@ -58,6 +61,43 @@ void Descriptor::RTV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size
 	Dev->CreateRenderTargetView(&rsc, &dsc, handle);
 }
 
-void Descriptor::SRV()
+// SRV生成
+void Descriptor::SRV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index)
 {
+	D3D12_SHADER_RESOURCE_VIEW_DESC dsc{};
+	dsc.Format                  = rsc.GetDesc().Format;
+	dsc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	dsc.Texture2D.MipLevels     = 1;
+	dsc.ViewDimension           = D3D12_SRV_DIMENSION::D3D12_SRV_DIMENSION_TEXTURE2D;
+
+	auto handle = heap.GetCPUDescriptorHandleForHeapStart();
+	handle.ptr += Dev->GetDescriptorHandleIncrementSize(heap.GetDesc().Type) * unsigned int(index);
+
+	Dev->CreateShaderResourceView(&rsc, &dsc, handle);
+}
+
+// CBV生成
+void Descriptor::CBV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& size, const size_t& index)
+{
+	D3D12_CONSTANT_BUFFER_VIEW_DESC dsc{};
+	dsc.BufferLocation = rsc.GetGPUVirtualAddress();
+	dsc.SizeInBytes    = unsigned int(size);
+
+	auto handle = heap.GetCPUDescriptorHandleForHeapStart();
+	handle.ptr += Dev->GetDescriptorHandleIncrementSize(heap.GetDesc().Type) * unsigned int(index);
+
+	Dev->CreateConstantBufferView(&dsc, handle);
+}
+
+// DSV生成
+void Descriptor::DSV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index)
+{
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsc{};
+	dsc.Format = DXGI_FORMAT::DXGI_FORMAT_D32_FLOAT;
+	dsc.ViewDimension = D3D12_DSV_DIMENSION::D3D12_DSV_DIMENSION_TEXTURE2D;
+
+	auto handle = heap.GetCPUDescriptorHandleForHeapStart();
+	handle.ptr += Dev->GetDescriptorHandleIncrementSize(heap.GetDesc().Type) * unsigned int(index);
+
+	Dev->CreateDepthStencilView(&rsc, &dsc, handle);
 }
