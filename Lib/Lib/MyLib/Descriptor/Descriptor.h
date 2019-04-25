@@ -1,14 +1,5 @@
 #pragma once
-
-struct ID3D12Resource;
-struct ID3D12DescriptorHeap;
-struct D3D12_HEAP_PROPERTIES;
-struct D3D12_RESOURCE_DESC;
-struct D3D12_CLEAR_VALUE;
-
-enum D3D12_DESCRIPTOR_HEAP_TYPE;
-enum D3D12_DESCRIPTOR_HEAP_FLAGS;
-enum D3D12_RESOURCE_STATES;
+#include "../etc/Define.h"
 
 class Descriptor
 {

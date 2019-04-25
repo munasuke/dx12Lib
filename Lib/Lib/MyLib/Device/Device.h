@@ -1,6 +1,5 @@
 #pragma once
-
-struct ID3D12Device;
+#include "../etc/Define.h"
 
 class Device
 {
