@@ -45,7 +45,7 @@ MyLib::~MyLib()
 }
 
 //	ルートのインスタンス
-void MyLib::RootSignature(const std::string& name, std::initializer_list<std::string>& fileName)
+void MyLib::RootSignature(const std::string& name, const std::initializer_list<std::string>& fileName)
 {
 	if (root.find(name) != root.end())
 	{
@@ -55,9 +55,9 @@ void MyLib::RootSignature(const std::string& name, std::initializer_list<std::st
 	auto itr = fileName.begin();
 	while (itr != fileName.end())
 	{
-		root[name]->Vertex(*itr);
+		root[name]->Vertex(*itr, "main", "vs_5_1");
 		++itr;
-		root[name]->Pixel(*itr);
+		root[name]->Pixel(*itr, "main", "ps_5_1");
 		++itr;
 	}
 }
@@ -91,6 +91,8 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	win   = std::make_shared<Window>(pos, size, parent);
 	list  = std::make_shared<List>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
 	queue = std::make_shared<Queue>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
+
+	RootSignature("tex", { "MyLib/Shader/Texture/TexVS.hlsl", "MyLib/Shader/Texture/TexVS.hlsl" });
 }
 
 // タイトル名変更
