@@ -7,6 +7,7 @@ public:
 	SwapChain(std::weak_ptr<Window> win, std::weak_ptr<Queue> queue);
 	~SwapChain();
 
+	void Present();
 	IDXGISwapChain4* Get()const;
 private:
 	// ファクトリー生成

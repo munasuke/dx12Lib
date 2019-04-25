@@ -58,6 +58,11 @@ long SwapChain::CreateSwapChain(std::weak_ptr<Window> win, std::weak_ptr<Queue> 
 	return hr;
 }
 
+void SwapChain::Present()
+{
+	swap->Present(1, 0);
+}
+
 IDXGISwapChain4* SwapChain::Get() const
 {
 	return swap;

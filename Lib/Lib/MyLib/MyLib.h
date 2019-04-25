@@ -60,6 +60,12 @@ private:
 	// フェンス
 	std::unique_ptr<Fence>fence;
 
+	// スワップチェイン
+	std::shared_ptr<SwapChain> swap;
+
+	// レンダーターゲット
+	std::unique_ptr<RenderTarget> rt;
+
 	// ルート
 	static std::unordered_map<std::string, std::shared_ptr<Root>>root;
 

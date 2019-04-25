@@ -1,71 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Device">
-      <UniqueIdentifier>{52f23750-7fdc-4cd0-b1b4-1f64916981e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Descriptor">
-      <UniqueIdentifier>{66030ef5-36f8-4362-b3fa-7954e3899f55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Window">
-      <UniqueIdentifier>{5970d0a0-ba35-49c5-9657-7963b6e4bca4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="etc">
-      <UniqueIdentifier>{8012c9c9-cc82-446c-bd24-70c9b2ddf911}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="etc\Func">
-      <UniqueIdentifier>{c16a4d79-1c62-4032-9d49-2be2d48d084b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Root">
-      <UniqueIdentifier>{f16e4488-ccce-4bd4-8fce-bb12cc273121}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyLib">
-      <UniqueIdentifier>{836f8ce6-fb4a-4270-a123-33b38c46bfe3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\Texture">
-      <UniqueIdentifier>{8d12f7d0-85ba-408e-9347-c7825b679377}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Queue">
-      <UniqueIdentifier>{2dac1587-f04d-454b-91bc-a096be8d8c6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="List">
-      <UniqueIdentifier>{ed16bbf3-0734-4620-b8ac-c54e9d4ae1c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Pipe">
-      <UniqueIdentifier>{0d417a04-1d84-4ca0-976d-580018b1c3c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fence">
-      <UniqueIdentifier>{5be1abd1-8aa4-4559-953f-4368bc96765d}</UniqueIdentifier>
-    <Filter Include="SwapChain">
-      <UniqueIdentifier>{dc043f62-bbf0-4ceb-8589-141b15fb0821}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RenderTarget">
-      <UniqueIdentifier>{ac297cf1-96b9-4ee0-93e8-9aa2027ee42c}</UniqueIdentifier>
-    </Filter>
+    <FxCompile Include="MyLib\Shader\Texture\Texture.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Texture\TexPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Texture\TexVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyLib\Descriptor\Descriptor.h">
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyLib\etc\Func.cpp">
+      <Filter>etc</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Descriptor\Descriptor.cpp">
       <Filter>Descriptor</Filter>
-    </ClInclude>
-    <ClInclude Include="MyLib\Device\Device.h">
+    </ClCompile>
+    <ClCompile Include="MyLib\Device\Device.cpp">
       <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Fence\Fence.cpp">
+      <Filter>Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\List\List.cpp">
+      <Filter>List</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\MyLib.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Pipe\Pipe.cpp">
+      <Filter>Pipe</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Queue\Queue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\RenderTarget\RenderTarget.cpp">
+      <Filter>RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Root\Root.cpp">
+      <Filter>Root</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\SwapChain\SwapChain.cpp">
+      <Filter>SwapChain</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Window\Window.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MyLib\etc\Define.h">
+      <Filter>etc</Filter>
     </ClInclude>
     <ClInclude Include="MyLib\etc\Func.h">
-      <Filter>etc\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="MyLib\etc\Define.h">
       <Filter>etc</Filter>
     </ClInclude>
     <ClInclude Include="MyLib\etc\Release.h">
@@ -77,82 +66,79 @@
     <ClInclude Include="MyLib\etc\Vector3.h">
       <Filter>etc</Filter>
     </ClInclude>
-    <ClInclude Include="MyLib\MyLib.h">
-      <Filter>MyLib</Filter>
+    <ClInclude Include="MyLib\Descriptor\Descriptor.h">
+      <Filter>Descriptor</Filter>
     </ClInclude>
-    <ClInclude Include="MyLib\Root\Root.h">
-      <Filter>Root</Filter>
+    <ClInclude Include="MyLib\Device\Device.h">
+      <Filter>Device</Filter>
     </ClInclude>
-    <ClInclude Include="MyLib\Window\Window.h">
-      <Filter>Window</Filter>
-    </ClInclude>
-    <ClInclude Include="MyLib\Queue\Queue.h">
-      <Filter>Queue</Filter>
+    <ClInclude Include="MyLib\Fence\Fence.h">
+      <Filter>Fence</Filter>
     </ClInclude>
     <ClInclude Include="MyLib\List\List.h">
       <Filter>List</Filter>
     </ClInclude>
+    <ClInclude Include="MyLib\MyLib.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
     <ClInclude Include="MyLib\Pipe\Pipe.h">
       <Filter>Pipe</Filter>
     </ClInclude>
-    <ClInclude Include="MyLib\Fence\Fence.h">
-      <Filter>Fence</Filter>
-    <ClInclude Include="MyLib\SwapChain\SwapChain.h">
-      <Filter>SwapChain</Filter>
+    <ClInclude Include="MyLib\Queue\Queue.h">
+      <Filter>Queue</Filter>
     </ClInclude>
     <ClInclude Include="MyLib\RenderTarget\RenderTarget.h">
       <Filter>RenderTarget</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\Descriptor\Descriptor.cpp">
-      <Filter>Descriptor</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\Device\Device.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\etc\Func.cpp">
-      <Filter>etc\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\MyLib.cpp">
-      <Filter>MyLib</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\Root\Root.cpp">
+    <ClInclude Include="MyLib\Root\Root.h">
       <Filter>Root</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\Window\Window.cpp">
-      <Filter>Window</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\Queue\Queue.cpp">
-      <Filter>Queue</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\List\List.cpp">
-      <Filter>List</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\Pipe\Pipe.cpp">
-      <Filter>Pipe</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\Fence\Fence.cpp">
-      <Filter>Fence</Filter>
-    <ClCompile Include="MyLib\SwapChain\SwapChain.cpp">
+    </ClInclude>
+    <ClInclude Include="MyLib\SwapChain\SwapChain.h">
       <Filter>SwapChain</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLib\RenderTarget\RenderTarget.cpp">
-      <Filter>RenderTarget</Filter>
-    </ClCompile>
+    </ClInclude>
+    <ClInclude Include="MyLib\Window\Window.h">
+      <Filter>Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="MyLib\Shader\Texture\TexPS.hlsl">
-      <Filter>リソース ファイル\Texture</Filter>
-    </FxCompile>
-    <FxCompile Include="MyLib\Shader\Texture\Texture.hlsl">
-      <Filter>リソース ファイル\Texture</Filter>
-    </FxCompile>
-    <FxCompile Include="MyLib\Shader\Texture\TexVS.hlsl">
-      <Filter>リソース ファイル\Texture</Filter>
-    </FxCompile>
+    <Filter Include="etc">
+      <UniqueIdentifier>{2eba8692-2249-4d1a-89e2-99b074f3df4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Descriptor">
+      <UniqueIdentifier>{eb44002b-399e-4743-883e-2b3dc5a0b7e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{5f0093c7-6372-4a3b-8651-9e3c1a935b98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fence">
+      <UniqueIdentifier>{5fe91914-1651-4b2d-97e8-8b60075f89bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="List">
+      <UniqueIdentifier>{84077dcf-7697-4b8f-ac02-23c773c18969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyLib">
+      <UniqueIdentifier>{a615f64d-0281-42c4-b228-77dc3ab87dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pipe">
+      <UniqueIdentifier>{e83a422c-c774-4342-a06e-3f0c457b4a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Queue">
+      <UniqueIdentifier>{356a7cf7-cfb0-42d4-8817-465314319b54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderTarget">
+      <UniqueIdentifier>{170b9da5-70f0-4e6b-b973-7b5abffcc499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Root">
+      <UniqueIdentifier>{d015f5eb-7560-4041-a704-a172be0401d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SwapChain">
+      <UniqueIdentifier>{0d30756d-1104-4376-9e3f-6b8c0f4f0fdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{72e5e51a-34bc-4230-8913-e28a398a3f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{bbc105bc-eb36-41db-8795-e30bf28bb00e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

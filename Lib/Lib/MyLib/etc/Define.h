@@ -38,4 +38,5 @@ class Queue;
 class Fence;
 class Root;
 class Pipe;
+class RenderTarget;
 class SwapChain;

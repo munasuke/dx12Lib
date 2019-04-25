@@ -5,6 +5,8 @@
 #include "Fence/Fence.h"
 #include "Root/Root.h"
 #include "Pipe/Pipe.h"
+#include "SwapChain/SwapChain.h"
+#include "RenderTarget/RenderTarget.h"
 #include <d3d12.h>
 
 #pragma comment(lib, "d3d12.lib")
@@ -93,6 +95,8 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	list  = std::make_shared<List>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
 	queue = std::make_shared<Queue>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
 	fence = std::make_unique<Fence>(queue);
+	swap  = std::make_shared<SwapChain>(win, queue);
+	rt    = std::make_unique<RenderTarget>(swap);
 
 	RootSignature("tex", { "MyLib/Shader/Texture/TexVS.hlsl", "MyLib/Shader/Texture/TexPS.hlsl" });
 	PipeLine("tex", "tex", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0, 1 }, false);
@@ -145,9 +149,22 @@ bool MyLib::CheckMsg(void) const
 // ‰æ–ÊƒNƒŠƒA
 void MyLib::Clear(void) const
 {
+	list->Reset();
+	list->Viewport(GetWinSize());
+	list->Scissor(GetWinSize());
+	list->Barrier(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_RENDER_TARGET, rt->GetRsc());
+	rt->Clear(list);
 }
 
 // ŽÀs
 void MyLib::Execution(void) const
 {
+	list->Barrier(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT, rt->GetRsc());
+
+	list->Close();
+
+	ID3D12CommandList* lists[] = { list->GetList() };
+	queue->Execution(lists, _countof(lists));
+	swap->Present();
+	fence->Wait();
 }

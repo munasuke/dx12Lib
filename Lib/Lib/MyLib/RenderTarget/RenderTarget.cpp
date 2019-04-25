@@ -11,6 +11,7 @@ const float color[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 RenderTarget::RenderTarget(std::weak_ptr<SwapChain> swap) :
 	swap(swap), heap(nullptr)
 {
+	CreateRenderTarget();
 }
 
 RenderTarget::~RenderTarget()
