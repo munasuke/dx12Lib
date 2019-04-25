@@ -8,6 +8,8 @@ enum D3D12_DESCRIPTOR_HEAP_FLAGS;
 enum D3D12_RESOURCE_STATES;
 enum D3D12_RESOURCE_STATES;
 enum D3D_PRIMITIVE_TOPOLOGY;
+enum D3D12_INPUT_ELEMENT_DESC;
+enum D3D12_PRIMITIVE_TOPOLOGY_TYPE;
 
 //ç\ë¢ëÃ
 struct ID3D12Device;
@@ -32,3 +34,4 @@ class Window;
 class List;
 class Queue;
 class Root;
+class Pipe;

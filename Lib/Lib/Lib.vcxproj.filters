@@ -43,6 +43,9 @@
     <Filter Include="List">
       <UniqueIdentifier>{ed16bbf3-0734-4620-b8ac-c54e9d4ae1c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pipe">
+      <UniqueIdentifier>{0d417a04-1d84-4ca0-976d-580018b1c3c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyLib\Descriptor\Descriptor.h">
@@ -81,6 +84,9 @@
     <ClInclude Include="MyLib\List\List.h">
       <Filter>List</Filter>
     </ClInclude>
+    <ClInclude Include="MyLib\Pipe\Pipe.h">
+      <Filter>Pipe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -109,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="MyLib\List\List.cpp">
       <Filter>List</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Pipe\Pipe.cpp">
+      <Filter>Pipe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
