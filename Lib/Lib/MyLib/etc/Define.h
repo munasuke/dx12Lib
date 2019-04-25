@@ -27,6 +27,8 @@ struct ID3D12PipelineState;
 struct D3D12_VERTEX_BUFFER_VIEW;
 struct D3D12_INDEX_BUFFER_VIEW;
 struct D3D12_INPUT_ELEMENT_DESC;
+struct IDXGIFactory4;
+struct IDXGISwapChain4;
 
 // ƒNƒ‰ƒX
 class Window;
@@ -34,3 +36,4 @@ class List;
 class Queue;
 class Root;
 class Pipe;
+class SwapChain;

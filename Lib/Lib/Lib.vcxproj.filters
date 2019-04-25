@@ -46,6 +46,12 @@
     <Filter Include="Pipe">
       <UniqueIdentifier>{0d417a04-1d84-4ca0-976d-580018b1c3c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SwapChain">
+      <UniqueIdentifier>{dc043f62-bbf0-4ceb-8589-141b15fb0821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderTarget">
+      <UniqueIdentifier>{ac297cf1-96b9-4ee0-93e8-9aa2027ee42c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyLib\Descriptor\Descriptor.h">
@@ -87,6 +93,12 @@
     <ClInclude Include="MyLib\Pipe\Pipe.h">
       <Filter>Pipe</Filter>
     </ClInclude>
+    <ClInclude Include="MyLib\SwapChain\SwapChain.h">
+      <Filter>SwapChain</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\RenderTarget\RenderTarget.h">
+      <Filter>RenderTarget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -118,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="MyLib\Pipe\Pipe.cpp">
       <Filter>Pipe</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\SwapChain\SwapChain.cpp">
+      <Filter>SwapChain</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\RenderTarget\RenderTarget.cpp">
+      <Filter>RenderTarget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
