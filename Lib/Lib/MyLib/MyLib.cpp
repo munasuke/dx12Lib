@@ -2,6 +2,7 @@
 #include "Window/Window.h"
 #include "List/List.h"
 #include "Queue/Queue.h"
+#include "Fence/Fence.h"
 #include "Root/Root.h"
 #include "Pipe/Pipe.h"
 #include <d3d12.h>
@@ -91,6 +92,7 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	win   = std::make_shared<Window>(pos, size, parent);
 	list  = std::make_shared<List>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
 	queue = std::make_shared<Queue>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
+	fence = std::make_unique<Fence>(queue);
 
 	RootSignature("tex", { "MyLib/Shader/Texture/TexVS.hlsl", "MyLib/Shader/Texture/TexPS.hlsl" });
 	PipeLine("tex", "tex", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0, 1 }, false);

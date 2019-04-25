@@ -57,6 +57,9 @@ private:
 	// キュー
 	std::shared_ptr<Queue>queue;
 
+	// フェンス
+	std::unique_ptr<Fence>fence;
+
 	// ルート
 	static std::unordered_map<std::string, std::shared_ptr<Root>>root;
 

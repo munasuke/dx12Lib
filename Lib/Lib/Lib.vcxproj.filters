@@ -46,6 +46,9 @@
     <Filter Include="Pipe">
       <UniqueIdentifier>{0d417a04-1d84-4ca0-976d-580018b1c3c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fence">
+      <UniqueIdentifier>{5be1abd1-8aa4-4559-953f-4368bc96765d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyLib\Descriptor\Descriptor.h">
@@ -87,6 +90,9 @@
     <ClInclude Include="MyLib\Pipe\Pipe.h">
       <Filter>Pipe</Filter>
     </ClInclude>
+    <ClInclude Include="MyLib\Fence\Fence.h">
+      <Filter>Fence</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -118,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="MyLib\Pipe\Pipe.cpp">
       <Filter>Pipe</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Fence\Fence.cpp">
+      <Filter>Fence</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

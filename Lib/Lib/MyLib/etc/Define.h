@@ -27,10 +27,12 @@ struct ID3D12PipelineState;
 struct D3D12_VERTEX_BUFFER_VIEW;
 struct D3D12_INDEX_BUFFER_VIEW;
 struct D3D12_INPUT_ELEMENT_DESC;
+struct ID3D12Fence;
 
 // ƒNƒ‰ƒX
 class Window;
 class List;
 class Queue;
+class Fence;
 class Root;
 class Pipe;

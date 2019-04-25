@@ -145,6 +145,7 @@
     <ClInclude Include="MyLib\etc\Release.h" />
     <ClInclude Include="MyLib\etc\Vector2.h" />
     <ClInclude Include="MyLib\etc\Vector3.h" />
+    <ClInclude Include="MyLib\Fence\Fence.h" />
     <ClInclude Include="MyLib\List\List.h" />
     <ClInclude Include="MyLib\MyLib.h" />
     <ClInclude Include="MyLib\Pipe\Pipe.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="MyLib\Descriptor\Descriptor.cpp" />
     <ClCompile Include="MyLib\Device\Device.cpp" />
     <ClCompile Include="MyLib\etc\Func.cpp" />
+    <ClCompile Include="MyLib\Fence\Fence.cpp" />
     <ClCompile Include="MyLib\List\List.cpp" />
     <ClCompile Include="MyLib\MyLib.cpp" />
     <ClCompile Include="MyLib\Pipe\Pipe.cpp" />
