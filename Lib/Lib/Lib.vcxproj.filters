@@ -19,24 +19,89 @@
     <Filter Include="Descriptor">
       <UniqueIdentifier>{66030ef5-36f8-4362-b3fa-7954e3899f55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{5970d0a0-ba35-49c5-9657-7963b6e4bca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="etc">
+      <UniqueIdentifier>{8012c9c9-cc82-446c-bd24-70c9b2ddf911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="etc\Func">
+      <UniqueIdentifier>{c16a4d79-1c62-4032-9d49-2be2d48d084b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Root">
+      <UniqueIdentifier>{f16e4488-ccce-4bd4-8fce-bb12cc273121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyLib">
+      <UniqueIdentifier>{836f8ce6-fb4a-4270-a123-33b38c46bfe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Texture">
+      <UniqueIdentifier>{8d12f7d0-85ba-408e-9347-c7825b679377}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Device\Device.h">
-      <Filter>Device</Filter>
-    </ClInclude>
-    <ClInclude Include="Descriptor\Descriptor.h">
+    <ClInclude Include="MyLib\Descriptor\Descriptor.h">
       <Filter>Descriptor</Filter>
     </ClInclude>
+    <ClInclude Include="MyLib\Device\Device.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Func.h">
+      <Filter>etc\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Define.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Release.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Vector2.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Vector3.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\MyLib.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Root\Root.h">
+      <Filter>Root</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Window\Window.h">
+      <Filter>Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Device\Device.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Descriptor\Descriptor.cpp">
+    <ClCompile Include="MyLib\Descriptor\Descriptor.cpp">
       <Filter>Descriptor</Filter>
     </ClCompile>
+    <ClCompile Include="MyLib\Device\Device.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\etc\Func.cpp">
+      <Filter>etc\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\MyLib.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Root\Root.cpp">
+      <Filter>Root</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Window\Window.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="MyLib\Shader\Texture\TexPS.hlsl">
+      <Filter>リソース ファイル\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Texture\Texture.hlsl">
+      <Filter>リソース ファイル\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Texture\TexVS.hlsl">
+      <Filter>リソース ファイル\Texture</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

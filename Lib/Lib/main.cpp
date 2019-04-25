@@ -1,11 +1,12 @@
-#include"Device\Device.h"
-#include <Windows.h>
-
-#pragma comment(lib, "d3d12.lib")
+#include "MyLib/MyLib.h"
 
 int main()
 {
-	Device::Get().GetDev();
+	MyLib lib(640);
+	while (lib.CheckMsg())
+	{
+
+	}
 
 	return 0;
 }
