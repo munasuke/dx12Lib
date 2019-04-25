@@ -2,6 +2,7 @@
 #include "etc/Define.h"
 #include "etc/Vector2.h"
 #include <string>
+#include <unordered_map>
 
 class MyLib
 {
@@ -35,6 +36,14 @@ private:
 	MyLib(const MyLib&) = delete;
 	void operator=(const MyLib&) = delete;
 
+	//	ルートのインスタンス
+	void RootSignature(const std::string& name, std::initializer_list<std::string>& fileName);
+
+	// パイプのインスタンス
+	void PipeLine(const std::string& name, const std::string& rootName,
+		const D3D12_PRIMITIVE_TOPOLOGY_TYPE& type, const std::initializer_list<unsigned int>& index, const bool& depth);
+
+
 	// クラスのインスタンス
 	void Instance(const Vec2& pos, const Vec2& size, void* parent);
 
@@ -47,4 +56,10 @@ private:
 
 	// キュー
 	std::shared_ptr<Queue>queue;
+
+	// ルート
+	static std::unordered_map<std::string, std::shared_ptr<Root>>root;
+
+	// パイプ
+	static std::unordered_map<std::string, std::shared_ptr<Pipe>>pipe;
 };

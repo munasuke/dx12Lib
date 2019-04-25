@@ -2,11 +2,24 @@
 #include "Window/Window.h"
 #include "List/List.h"
 #include "Queue/Queue.h"
+#include "Root/Root.h"
+#include "Pipe/Pipe.h"
 #include <d3d12.h>
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+
+std::unordered_map<std::string, std::shared_ptr<Root>> MyLib::root;
+std::unordered_map<std::string, std::shared_ptr<Pipe>> MyLib::pipe;
+
+// インプット一覧
+const D3D12_INPUT_ELEMENT_DESC inputs[] = {
+	//0
+	{ "POSITION", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION::D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+	//2
+	{ "TEXCOORD", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32_FLOAT,       0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION::D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+};
 
 // コンストラクタ
 MyLib::MyLib(const Vec2& size, const Vec2& pos)
@@ -29,6 +42,41 @@ MyLib::MyLib(std::weak_ptr<MyLib>lib, const Vec2& size, const Vec2& pos)
 // デストラクタ
 MyLib::~MyLib()
 {
+}
+
+//	ルートのインスタンス
+void MyLib::RootSignature(const std::string& name, std::initializer_list<std::string>& fileName)
+{
+	if (root.find(name) != root.end())
+	{
+		return;
+	}
+	root[name] = std::make_shared<Root>();
+	auto itr = fileName.begin();
+	while (itr != fileName.end())
+	{
+		root[name]->Vertex(*itr);
+		++itr;
+		root[name]->Pixel(*itr);
+		++itr;
+	}
+}
+
+// パイプのインスタンス
+void MyLib::PipeLine(const std::string& name, const std::string& rootName, const D3D12_PRIMITIVE_TOPOLOGY_TYPE& type, const std::initializer_list<unsigned int>& index, const bool& depth)
+{
+	if (pipe.find(name) != pipe.end())
+	{
+		return;
+	}
+
+	std::vector<D3D12_INPUT_ELEMENT_DESC>input;
+	for (auto& i : index)
+	{
+		input.push_back(inputs[i]);
+	}
+
+	pipe[name] = std::make_shared<Pipe>(root[rootName], *input.data(), input.size(), type, depth);
 }
 
 // クラスのインスタンス
