@@ -41,4 +41,10 @@ private:
 
 	// ウィンドウ
 	std::shared_ptr<Window>win;
+
+	// リスト
+	std::shared_ptr<List>list;
+
+	// キュー
+	std::shared_ptr<Queue>queue;
 };

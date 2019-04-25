@@ -37,6 +37,12 @@
     <Filter Include="リソース ファイル\Texture">
       <UniqueIdentifier>{8d12f7d0-85ba-408e-9347-c7825b679377}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Queue">
+      <UniqueIdentifier>{2dac1587-f04d-454b-91bc-a096be8d8c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="List">
+      <UniqueIdentifier>{ed16bbf3-0734-4620-b8ac-c54e9d4ae1c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyLib\Descriptor\Descriptor.h">
@@ -69,6 +75,12 @@
     <ClInclude Include="MyLib\Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="MyLib\Queue\Queue.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\List\List.h">
+      <Filter>List</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -91,6 +103,12 @@
     </ClCompile>
     <ClCompile Include="MyLib\Window\Window.cpp">
       <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Queue\Queue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\List\List.cpp">
+      <Filter>List</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

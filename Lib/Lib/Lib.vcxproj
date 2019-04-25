@@ -145,7 +145,9 @@
     <ClInclude Include="MyLib\etc\Release.h" />
     <ClInclude Include="MyLib\etc\Vector2.h" />
     <ClInclude Include="MyLib\etc\Vector3.h" />
+    <ClInclude Include="MyLib\List\List.h" />
     <ClInclude Include="MyLib\MyLib.h" />
+    <ClInclude Include="MyLib\Queue\Queue.h" />
     <ClInclude Include="MyLib\Root\Root.h" />
     <ClInclude Include="MyLib\Window\Window.h" />
   </ItemGroup>
@@ -154,7 +156,9 @@
     <ClCompile Include="MyLib\Descriptor\Descriptor.cpp" />
     <ClCompile Include="MyLib\Device\Device.cpp" />
     <ClCompile Include="MyLib\etc\Func.cpp" />
+    <ClCompile Include="MyLib\List\List.cpp" />
     <ClCompile Include="MyLib\MyLib.cpp" />
+    <ClCompile Include="MyLib\Queue\Queue.cpp" />
     <ClCompile Include="MyLib\Root\Root.cpp" />
     <ClCompile Include="MyLib\Window\Window.cpp" />
   </ItemGroup>

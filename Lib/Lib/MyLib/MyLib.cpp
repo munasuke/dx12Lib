@@ -1,5 +1,7 @@
 #include "MyLib.h"
 #include "Window/Window.h"
+#include "List/List.h"
+#include "Queue/Queue.h"
 #include <d3d12.h>
 
 #pragma comment(lib, "d3d12.lib")
@@ -38,7 +40,9 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	debug->EnableDebugLayer();
 #endif
 
-	win = std::make_shared<Window>(pos, size, parent);
+	win   = std::make_shared<Window>(pos, size, parent);
+	list  = std::make_shared<List>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
+	queue = std::make_shared<Queue>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
 }
 
 // タイトル名変更
