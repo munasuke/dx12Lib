@@ -150,7 +150,9 @@
     <ClInclude Include="MyLib\MyLib.h" />
     <ClInclude Include="MyLib\Pipe\Pipe.h" />
     <ClInclude Include="MyLib\Queue\Queue.h" />
+    <ClInclude Include="MyLib\RenderTarget\RenderTarget.h" />
     <ClInclude Include="MyLib\Root\Root.h" />
+    <ClInclude Include="MyLib\SwapChain\SwapChain.h" />
     <ClInclude Include="MyLib\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +165,9 @@
     <ClCompile Include="MyLib\MyLib.cpp" />
     <ClCompile Include="MyLib\Pipe\Pipe.cpp" />
     <ClCompile Include="MyLib\Queue\Queue.cpp" />
+    <ClCompile Include="MyLib\RenderTarget\RenderTarget.cpp" />
     <ClCompile Include="MyLib\Root\Root.cpp" />
+    <ClCompile Include="MyLib\SwapChain\SwapChain.cpp" />
     <ClCompile Include="MyLib\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

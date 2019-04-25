@@ -48,6 +48,11 @@
     </Filter>
     <Filter Include="Fence">
       <UniqueIdentifier>{5be1abd1-8aa4-4559-953f-4368bc96765d}</UniqueIdentifier>
+    <Filter Include="SwapChain">
+      <UniqueIdentifier>{dc043f62-bbf0-4ceb-8589-141b15fb0821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderTarget">
+      <UniqueIdentifier>{ac297cf1-96b9-4ee0-93e8-9aa2027ee42c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +97,11 @@
     </ClInclude>
     <ClInclude Include="MyLib\Fence\Fence.h">
       <Filter>Fence</Filter>
+    <ClInclude Include="MyLib\SwapChain\SwapChain.h">
+      <Filter>SwapChain</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\RenderTarget\RenderTarget.h">
+      <Filter>RenderTarget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +137,11 @@
     </ClCompile>
     <ClCompile Include="MyLib\Fence\Fence.cpp">
       <Filter>Fence</Filter>
+    <ClCompile Include="MyLib\SwapChain\SwapChain.cpp">
+      <Filter>SwapChain</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\RenderTarget\RenderTarget.cpp">
+      <Filter>RenderTarget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

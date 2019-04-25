@@ -28,6 +28,8 @@ struct D3D12_VERTEX_BUFFER_VIEW;
 struct D3D12_INDEX_BUFFER_VIEW;
 struct D3D12_INPUT_ELEMENT_DESC;
 struct ID3D12Fence;
+struct IDXGIFactory4;
+struct IDXGISwapChain4;
 
 // ƒNƒ‰ƒX
 class Window;
@@ -36,3 +38,4 @@ class Queue;
 class Fence;
 class Root;
 class Pipe;
+class SwapChain;
