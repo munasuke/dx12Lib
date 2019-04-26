@@ -25,6 +25,9 @@ public:
 	// ルートシグネチャセット
 	void SetRoot(std::weak_ptr<Root>root) const;
 
+	// パイプラインのセット
+	void SetPipe(std::weak_ptr<Pipe>pipe) const;
+
 	// ヒープセット
 	void SetHeap(ID3D12DescriptorHeap** heap, const size_t& num) const;
 

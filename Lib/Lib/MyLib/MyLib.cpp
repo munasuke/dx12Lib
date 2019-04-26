@@ -7,6 +7,7 @@
 #include "Pipe/Pipe.h"
 #include "SwapChain/SwapChain.h"
 #include "RenderTarget/RenderTarget.h"
+#include "Primitive/Primitive.h"
 #include <d3d12.h>
 
 #pragma comment(lib, "d3d12.lib")
@@ -98,6 +99,11 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	swap  = std::make_shared<SwapChain>(win, queue);
 	rt    = std::make_unique<RenderTarget>(swap);
 
+	RootSignature("prim", { "MyLib/Shader/Primitive/PrimVS.hlsl", "MyLib/Shader/Primitive/PrimPS.hlsl" });
+	PipeLine("point",    "prim", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT,    { 0 }, false);
+	PipeLine("line",     "prim", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE,     { 0 }, false);
+	PipeLine("triangle", "prim", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0 }, false);
+
 	RootSignature("tex", { "MyLib/Shader/Texture/TexVS.hlsl", "MyLib/Shader/Texture/TexPS.hlsl" });
 	PipeLine("tex", "tex", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0, 1 }, false);
 }
@@ -154,6 +160,37 @@ void MyLib::Clear(void) const
 	list->Scissor(GetWinSize());
 	list->Barrier(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_RENDER_TARGET, rt->GetRsc());
 	rt->Clear(list);
+}
+
+// プリミティブ描画
+void MyLib::Draw(Primitive& prim)
+{
+	prim.UpData();
+	list->SetRoot(root["prim"]);
+	switch (prim.type)
+	{
+	case 0:
+		break;
+	case 1:
+		list->SetPipe(pipe["point"]);
+		break;
+	case 2:
+		list->SetPipe(pipe["line"]);
+		break;
+	default:
+		list->SetPipe(pipe["triangle"]);
+		break;
+	}
+
+	D3D12_VERTEX_BUFFER_VIEW view{};
+	view.BufferLocation = prim.rsc->GetGPUVirtualAddress();
+	view.SizeInBytes    = unsigned int(prim.rsc->GetDesc().Width);
+	view.StrideInBytes  = sizeof(prim.pos[0]);
+	list->VertexView(view);
+
+	list->Topology(D3D12_PRIMITIVE_TOPOLOGY(prim.type));
+
+	list->DrawVertex(prim.pos.size());
 }
 
 // 実行

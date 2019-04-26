@@ -1,14 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="MyLib\Shader\Texture\Texture.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="MyLib\Shader\Texture\TexPS.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Shader\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Texture\Texture.hlsl">
+      <Filter>Shader\Texture</Filter>
     </FxCompile>
     <FxCompile Include="MyLib\Shader\Texture\TexVS.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Shader\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Primitive\Primitive.hlsl">
+      <Filter>Shader\Primitive</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Primitive\PrimVS.hlsl">
+      <Filter>Shader\Primitive</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Primitive\PrimPS.hlsl">
+      <Filter>Shader\Primitive</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +57,9 @@
     </ClCompile>
     <ClCompile Include="MyLib\Window\Window.cpp">
       <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Primitive\Primitive.cpp">
+      <Filter>Primitive</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +111,9 @@
     <ClInclude Include="MyLib\Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="MyLib\Primitive\Primitive.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="etc">
@@ -139,6 +154,15 @@
     </Filter>
     <Filter Include="Window">
       <UniqueIdentifier>{bbc105bc-eb36-41db-8795-e30bf28bb00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitive">
+      <UniqueIdentifier>{e87147c5-7600-4d5e-8a46-83c3fc0edd13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Texture">
+      <UniqueIdentifier>{febed668-bb5e-44c8-9eb4-c78d3dc74edd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Primitive">
+      <UniqueIdentifier>{8f1dd2b8-547b-4220-b9a1-9a401c5d1d5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

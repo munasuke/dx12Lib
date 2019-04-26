@@ -26,6 +26,13 @@ public:
 
 	// DSV生成
 	void DSV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index = 0);
+
+	// マップ
+	long Map(ID3D12Resource* rsc, void** data);
+
+	// アンマップ
+	void UnMap(ID3D12Resource* rsc);
+
 private:
 	Descriptor();
 };
