@@ -1,5 +1,6 @@
 #include "List.h"
 #include "../Root/Root.h"
+#include "../Pipe/Pipe.h"
 #include "../etc/Func.h"
 #include "../etc/Release.h"
 
@@ -88,6 +89,12 @@ void List::Barrier(const D3D12_RESOURCE_STATES& befor, const D3D12_RESOURCE_STAT
 void List::SetRoot(std::weak_ptr<Root> root) const
 {
 	list->SetGraphicsRootSignature(root.lock()->Get());
+}
+
+// パイプラインのセット
+void List::SetPipe(std::weak_ptr<Pipe> pipe) const
+{
+	list->SetPipelineState(pipe.lock()->Get());
 }
 
 // ヒープセット

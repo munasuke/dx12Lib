@@ -101,3 +101,28 @@ void Descriptor::DSV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size
 
 	Dev->CreateDepthStencilView(&rsc, &dsc, handle);
 }
+
+// マップ
+long Descriptor::Map(ID3D12Resource* rsc, void** data)
+{
+	D3D12_RANGE range = { 0, 1 };
+	auto hr = rsc->Map(0, &range, *(&data));
+	if (FAILED(hr))
+	{
+		func::DebugLog("リソースマップ：失敗");
+	}
+
+	return hr;
+}
+
+// アンマップ
+void Descriptor::UnMap(ID3D12Resource* rsc)
+{
+	if (rsc == nullptr)
+	{
+		return;
+	}
+
+	D3D12_RANGE range = { 0, 1 };
+	rsc->Unmap(0, &range);
+}

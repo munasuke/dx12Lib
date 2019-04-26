@@ -1,6 +1,7 @@
 #pragma once
 #include "etc/Define.h"
-#include "etc/Vector2.h"
+#include "etc/Vector3.h"
+#include "Primitive/Primitive.h"
 #include <string>
 #include <unordered_map>
 
@@ -28,6 +29,9 @@ public:
 
 	// 画面クリア
 	void Clear(void) const;
+
+	// プリミティブ描画
+	void Draw(Primitive& prim);
 
 	// 実行
 	void Execution(void) const;
