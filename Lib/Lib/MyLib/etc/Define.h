@@ -30,6 +30,7 @@ struct D3D12_INPUT_ELEMENT_DESC;
 struct ID3D12Fence;
 struct IDXGIFactory4;
 struct IDXGISwapChain4;
+struct D3D12_SUBRESOURCE_DATA;
 
 // ƒNƒ‰ƒX
 class Window;

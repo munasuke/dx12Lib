@@ -49,6 +49,15 @@
     <ClCompile Include="MyLib\Window\Window.cpp">
       <Filter>Window</Filter>
     </ClCompile>
+    <ClCompile Include="MyLib\Texture\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Texture\TexLoader.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Texture\WICTextureLoader12.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyLib\etc\Define.h">
@@ -99,6 +108,15 @@
     <ClInclude Include="MyLib\Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="MyLib\Texture\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Texture\TexLoader.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Texture\WICTextureLoader12.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="etc">
@@ -139,6 +157,9 @@
     </Filter>
     <Filter Include="Window">
       <UniqueIdentifier>{bbc105bc-eb36-41db-8795-e30bf28bb00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{419dbf0c-48d3-4dde-a3b8-de9863e4dfd4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

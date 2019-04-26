@@ -153,6 +153,9 @@
     <ClInclude Include="MyLib\RenderTarget\RenderTarget.h" />
     <ClInclude Include="MyLib\Root\Root.h" />
     <ClInclude Include="MyLib\SwapChain\SwapChain.h" />
+    <ClInclude Include="MyLib\Texture\TexLoader.h" />
+    <ClInclude Include="MyLib\Texture\Texture.h" />
+    <ClInclude Include="MyLib\Texture\WICTextureLoader12.h" />
     <ClInclude Include="MyLib\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +171,9 @@
     <ClCompile Include="MyLib\RenderTarget\RenderTarget.cpp" />
     <ClCompile Include="MyLib\Root\Root.cpp" />
     <ClCompile Include="MyLib\SwapChain\SwapChain.cpp" />
+    <ClCompile Include="MyLib\Texture\TexLoader.cpp" />
+    <ClCompile Include="MyLib\Texture\Texture.cpp" />
+    <ClCompile Include="MyLib\Texture\WICTextureLoader12.cpp" />
     <ClCompile Include="MyLib\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
