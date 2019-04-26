@@ -3,6 +3,7 @@
 #include "../Descriptor/Descriptor.h"
 #include "../List/List.h"
 #include "../Root/Root.h"
+#include "../Pipe/Pipe.h"
 #include "../etc/Release.h"
 #include <d3d12.h>
 
@@ -12,8 +13,10 @@
 Texture::Texture(const std::string& filePath) :
 	heap(nullptr)
 {
-	rsc.reserve(RSC_MAX);
-	vert.reserve(VERT_MAX);
+	rsc.assign(RSC_MAX, nullptr);
+	vert.assign(VERT_MAX, Vertex());
+
+	Load(filePath);
 }
 
 Texture::~Texture()
@@ -38,6 +41,8 @@ int Texture::Load(const std::string& filePath)
 		return -1;
 	}
 
+	rsc[index] = TexLoader::Get().GetRsc(filePath);
+
 	// SRV
 	Descriptor::Get().SRV(*rsc[index], *heap, index);
 
@@ -46,10 +51,10 @@ int Texture::Load(const std::string& filePath)
 
 	vbIndex = ++index;
 
-	vert[0] = Vertex(Vec3f(-1.0f, 1.0f, 0.0f), Vec2f(0.0f, 0.0f));
-	vert[1] = Vertex(Vec3f(1.0f, 1.0f, 0.0f), Vec2f(1.0f, 0.0f));
-	vert[2] = Vertex(Vec3f(-1.0f, -1.0f, 0.0f), Vec2f(0.0f, 1.0f));
-	vert[3] = Vertex(Vec3f(1.0f, -1.0f, 0.0f), Vec2f(1.0f, 1.0f));
+	vert[0] = Vertex(Vec3f(0.0f, 0.0f, 0.0f), Vec2f(0.0f, 0.0f));
+	vert[1] = Vertex(Vec3f(640.0f, 0.0f, 0.0f), Vec2f(1.0f, 0.0f));
+	vert[2] = Vertex(Vec3f(0.0f, 640.0f, 0.0f), Vec2f(0.0f, 1.0f));
+	vert[3] = Vertex(Vec3f(640.0f, 640.0f, 0.0f), Vec2f(1.0f, 1.0f));
 
 	if (FAILED(CreateVB(index)))
 	{
@@ -65,25 +70,28 @@ int Texture::Load(const std::string& filePath)
 	return 0;
 }
 
-void Texture::SetRS(std::weak_ptr<List> list, std::weak_ptr<Root> root)
+unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root, std::weak_ptr<Pipe> pipe)
 {
 	list.lock()->SetRoot(root);
-}
+	list.lock()->SetPipe(pipe);
 
-void Texture::SetDraw(std::weak_ptr<List> list)
-{
 	D3D12_VERTEX_BUFFER_VIEW vbv{};
 	vbv.BufferLocation = rsc[vbIndex]->GetGPUVirtualAddress();
-	vbv.SizeInBytes = unsigned int(sizeof(vert[0]) * vert.size());
-	vbv.StrideInBytes = sizeof(vert[0]);
+	vbv.SizeInBytes    = unsigned int(sizeof(vert[0]) * vert.size());
+	vbv.StrideInBytes  = sizeof(vert[0]);
 
 	list.lock()->GetList()->IASetVertexBuffers(0, 1, &vbv);
 
 	list.lock()->SetHeap(&heap, 1);
+
+	unsigned int index = 0;
 	for (int i = 0; i < RSC_MAX - 2; ++i)
 	{
 		list.lock()->GraphicTable(i, heap, i);
+		index = unsigned int(i);
 	}
+
+	return ++index;
 }
 
 void Texture::Draw(std::weak_ptr<List> list)
@@ -91,6 +99,29 @@ void Texture::Draw(std::weak_ptr<List> list)
 	list.lock()->GetList()->IASetPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	list.lock()->GetList()->DrawInstanced(4, 1, 0, 0);
+}
+
+long Texture::CreateCB(const unsigned int index)
+{
+	D3D12_HEAP_PROPERTIES hProp{};
+	hProp.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY::D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+	hProp.CreationNodeMask     = 1;
+	hProp.MemoryPoolPreference = D3D12_MEMORY_POOL::D3D12_MEMORY_POOL_UNKNOWN;
+	hProp.Type                 = D3D12_HEAP_TYPE::D3D12_HEAP_TYPE_UPLOAD;
+	hProp.VisibleNodeMask      = 1;
+
+	D3D12_RESOURCE_DESC dsc{};
+	dsc.DepthOrArraySize = 1;
+	dsc.Dimension        = D3D12_RESOURCE_DIMENSION::D3D12_RESOURCE_DIMENSION_BUFFER;
+	dsc.Flags            = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE;
+	dsc.Format           = DXGI_FORMAT::DXGI_FORMAT_UNKNOWN;
+	dsc.Height           = 1;
+	dsc.Layout           = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	dsc.MipLevels        = 1;
+	dsc.SampleDesc       = { 1, 0 };
+	dsc.Width            = sizeof(vert[0]) * vert.size();
+
+	return Descriptor::Get().CreateRsc(&rsc[index], hProp, dsc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 }
 
 long Texture::CreateVB(const unsigned int index)
@@ -122,9 +153,9 @@ long Texture::WriteSubResource(const std::string& path, const size_t& index)
 	auto decode = TexLoader::Get().GetDec(path);
 
 	D3D12_BOX box{};
-	box.back = 1;
+	box.back   = 1;
 	box.bottom = unsigned int(rsc[index]->GetDesc().Height);
-	box.right = unsigned int(rsc[index]->GetDesc().Width);
+	box.right  = unsigned int(rsc[index]->GetDesc().Width);
 
 	auto hr = rsc[index]->WriteToSubresource(0, &box, decode, unsigned int(sub->RowPitch), unsigned int(sub->SlicePitch));
 	if (FAILED(hr))
@@ -133,4 +164,9 @@ long Texture::WriteSubResource(const std::string& path, const size_t& index)
 	}
 
 	return hr;
+}
+
+Vec2 Texture::GetTexSize() const
+{
+	return Vec2();
 }

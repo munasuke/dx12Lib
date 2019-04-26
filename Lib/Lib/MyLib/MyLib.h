@@ -2,11 +2,20 @@
 #include "etc/Define.h"
 #include "etc/Vector3.h"
 #include "Primitive/Primitive.h"
+#include "Texture/Texture.h"
 #include <string>
 #include <unordered_map>
 
 class MyLib
 {
+	// 定数
+	struct Constant
+	{
+		Vec3f color;
+		float alpha;
+		Vec2f winSize;
+	};
+
 public:
 	// コンストラクタ
 	MyLib(const Vec2& size, const Vec2& pos = 0x80000000);
@@ -33,6 +42,9 @@ public:
 	// プリミティブ描画
 	void Draw(Primitive& prim);
 
+	// 画像描画
+	void Draw(Texture& tex);
+
 	// 実行
 	void Execution(void) const;
 
@@ -51,6 +63,8 @@ private:
 	// クラスのインスタンス
 	void Instance(const Vec2& pos, const Vec2& size, void* parent);
 
+	// 初期化
+	void Init();
 
 	// ウィンドウ
 	std::shared_ptr<Window>win;
@@ -75,4 +89,13 @@ private:
 
 	// パイプ
 	static std::unordered_map<std::string, std::shared_ptr<Pipe>>pipe;
+	
+	// ヒープ
+	ID3D12DescriptorHeap* heap;
+
+	// リソース
+	ID3D12Resource* rsc;
+
+	// 定数データ
+	Constant* constant;
 };

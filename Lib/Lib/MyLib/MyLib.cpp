@@ -7,8 +7,7 @@
 #include "Pipe/Pipe.h"
 #include "SwapChain/SwapChain.h"
 #include "RenderTarget/RenderTarget.h"
-#include "Primitive/Primitive.h"
-#include <d3d12.h>
+#include "etc/Release.h"
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -108,6 +107,34 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	PipeLine("tex", "tex", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0, 1 }, false);
 }
 
+void MyLib::Init()
+{
+	Desc.CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
+		D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
+
+	D3D12_HEAP_PROPERTIES prop{};
+	prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY::D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+	prop.MemoryPoolPreference = D3D12_MEMORY_POOL::D3D12_MEMORY_POOL_UNKNOWN;
+	prop.Type                 = D3D12_HEAP_TYPE::D3D12_HEAP_TYPE_UPLOAD;
+
+	D3D12_RESOURCE_DESC desc{};
+	desc.DepthOrArraySize = 1;
+	desc.Dimension        = D3D12_RESOURCE_DIMENSION::D3D12_RESOURCE_DIMENSION_BUFFER;
+	desc.Flags            = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE;
+	desc.Format           = DXGI_FORMAT::DXGI_FORMAT_UNKNOWN;
+	desc.Height           = 1;
+	desc.Layout           = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	desc.MipLevels        = 1;
+	desc.SampleDesc       = { 1, 0 };
+	desc.Width            = (sizeof(Constant) + 0xff) & ~0xff;
+
+	Desc.CreateRsc(&rsc, prop, desc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	Desc.CBV(*rsc, *heap);
+
+
+}
+
 // タイトル名変更
 void MyLib::ChangeTitle(const std::string& title) const
 {
@@ -191,6 +218,15 @@ void MyLib::Draw(Primitive& prim)
 	list->Topology(D3D12_PRIMITIVE_TOPOLOGY(prim.type));
 
 	list->DrawVertex(prim.pos.size());
+}
+
+// 画像描画
+void MyLib::Draw(Texture& tex)
+{
+	auto index = tex.SetDraw(list, root["tex"], pipe["tex"]);
+
+
+	tex.Draw(list);
 }
 
 // 実行

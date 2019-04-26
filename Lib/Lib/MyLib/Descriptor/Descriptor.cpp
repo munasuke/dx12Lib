@@ -77,11 +77,11 @@ void Descriptor::SRV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size
 }
 
 // CBV¶¬
-void Descriptor::CBV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& size, const size_t& index)
+void Descriptor::CBV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index)
 {
 	D3D12_CONSTANT_BUFFER_VIEW_DESC dsc{};
 	dsc.BufferLocation = rsc.GetGPUVirtualAddress();
-	dsc.SizeInBytes    = unsigned int(size);
+	dsc.SizeInBytes    = unsigned int(rsc.GetDesc().Width);
 
 	auto handle = heap.GetCPUDescriptorHandleForHeapStart();
 	handle.ptr += Dev->GetDescriptorHandleIncrementSize(heap.GetDesc().Type) * unsigned int(index);
