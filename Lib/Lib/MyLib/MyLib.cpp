@@ -8,6 +8,7 @@
 #include "SwapChain/SwapChain.h"
 #include "RenderTarget/RenderTarget.h"
 #include "etc/Release.h"
+#include <DirectXMath.h>
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -27,24 +28,38 @@ const D3D12_INPUT_ELEMENT_DESC inputs[] = {
 // コンストラクタ
 MyLib::MyLib(const Vec2& size, const Vec2& pos)
 {
+	Init();
+
+	constant->winSize = Vec2f(float(size.x), float(size.y));
+
 	Instance(pos, size, nullptr);
 }
 
 // コンストラクタ
 MyLib::MyLib(const MyLib& lib, const Vec2& size, const Vec2& pos)
 {
+	Init();
+
+	constant->winSize = Vec2f(float(size.x), float(size.y));
+
 	Instance(pos, size, lib.win->Get());
 }
 
 // コンストラクタ
 MyLib::MyLib(std::weak_ptr<MyLib>lib, const Vec2& size, const Vec2& pos)
 {
+	Init();
+
+	constant->winSize = Vec2f(float(size.x), float(size.y));
+
 	Instance(pos, size, lib.lock()->win->Get());
 }
 
 // デストラクタ
 MyLib::~MyLib()
 {
+	Desc.UnMap(rsc);
+	Release(rsc);
 }
 
 //	ルートのインスタンス
@@ -107,7 +122,18 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	PipeLine("tex", "tex", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0, 1 }, false);
 }
 
+// 変数初期化
 void MyLib::Init()
+{
+	heap     = nullptr;
+	rsc      = nullptr;
+	constant = nullptr;
+
+	CreateRes();
+}
+
+// 初期化
+void MyLib::CreateRes()
 {
 	Desc.CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
 		D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
@@ -132,7 +158,7 @@ void MyLib::Init()
 
 	Desc.CBV(*rsc, *heap);
 
-
+	Desc.Map(rsc, (void**)&constant);
 }
 
 // タイトル名変更
@@ -221,10 +247,25 @@ void MyLib::Draw(Primitive& prim)
 }
 
 // 画像描画
-void MyLib::Draw(Texture& tex)
+void MyLib::Draw(Texture& tex, const float alpha)
 {
-	auto index = tex.SetDraw(list, root["tex"], pipe["tex"]);
+	tex.vert[0] = { Vec3f(0.0f, 0.0f), Vec2f(0.0f, 0.0f) };
+	tex.vert[1] = { Vec3f(Vec2f(constant->winSize.x, 0.0f)), Vec2f(1.0f, 0.0f) };
+	tex.vert[2] = { Vec3f(Vec2f(0.0f, constant->winSize.y)), Vec2f(0.0f, 1.0f) };
+	tex.vert[3] = { Vec3f(constant->winSize), Vec2f(1.0f) };
 
+	memcpy(tex.data, tex.vert.data(), sizeof(tex.vert[0]) * tex.vert.size());
+
+	constant->alpha = alpha;
+
+	unsigned int index = tex.SetDraw(list, root["tex"], pipe["tex"]);
+
+	DirectX::XMStoreFloat4x4(&tex.con->matrix, DirectX::XMMatrixAffineTransformation2D(
+		DirectX::XMLoadFloat2(&Convert2(tex.size / constant->winSize)),
+		DirectX::XMLoadFloat2(&Convert2(tex.size / 2.0f)),
+		tex.rotate,
+		DirectX::XMLoadFloat3(&Convert3(tex.pos))
+	));
 
 	tex.Draw(list);
 }

@@ -4,6 +4,8 @@
                                     "visibility = SHADER_VISIBILITY_ALL),"\
                     "DescriptorTable(CBV(b0, numDescriptors = 1, space = 0, offset = DESCRIPTOR_RANGE_OFFSET_APPEND), "\
                                     "visibility = SHADER_VISIBILITY_ALL),"\
+                    "DescriptorTable(CBV(b1, numDescriptors = 1, space = 0, offset = DESCRIPTOR_RANGE_OFFSET_APPEND), "\
+                                    "visibility = SHADER_VISIBILITY_ALL),"\
                     "StaticSampler(s0, "\
                                   "filter         = FILTER_MIN_MAG_MIP_LINEAR, "\
                                   "addressU       = TEXTURE_ADDRESS_WRAP, "\
@@ -20,6 +22,20 @@
 
 Texture2D<float4> tex : register(t0);
 SamplerState smp      : register(s0);
+
+cbuffer Info : register(b0)
+{
+	float4x4 mat;
+	float2 uvPos;
+	float2 uvSize;
+	float2 reverse;
+}
+
+cbuffer Window : register(b1)
+{
+	float4 color;
+	float2 window;
+}
 
 // “ü—Í
 struct Input

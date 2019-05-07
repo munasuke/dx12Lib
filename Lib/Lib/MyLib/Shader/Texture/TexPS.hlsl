@@ -2,10 +2,11 @@
 
 float4 main(Out o) : SV_TARGET
 {
-    if (tex.Sample(smp, o.uv).a <= 0.0f)
+	float alpha = tex.Sample(smp, o.uv).a * color.a;
+    if (alpha <= 0.0f)
     {
         discard;
     }
 
-    return tex.Sample(smp, o.uv);
+    return float4(tex.Sample(smp, o.uv).xyz, alpha);
 }

@@ -43,7 +43,7 @@ public:
 	void Draw(Primitive& prim);
 
 	// 画像描画
-	void Draw(Texture& tex);
+	void Draw(Texture& tex, const float alpha = 1.0f);
 
 	// 実行
 	void Execution(void) const;
@@ -63,8 +63,11 @@ private:
 	// クラスのインスタンス
 	void Instance(const Vec2& pos, const Vec2& size, void* parent);
 
-	// 初期化
+	// 変数初期化
 	void Init();
+
+	// 初期化
+	void CreateRes();
 
 	// ウィンドウ
 	std::shared_ptr<Window>win;

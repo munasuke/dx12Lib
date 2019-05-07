@@ -11,7 +11,7 @@
 #define VERT_MAX 4
 
 Texture::Texture(const std::string& filePath) :
-	heap(nullptr)
+	heap(nullptr), con(nullptr), data(nullptr)
 {
 	rsc.assign(RSC_MAX, nullptr);
 	vert.assign(VERT_MAX, Vertex());
@@ -42,27 +42,20 @@ int Texture::Load(const std::string& filePath)
 	}
 
 	rsc[index] = TexLoader::Get().GetRsc(filePath);
-
-	// SRV
 	Descriptor::Get().SRV(*rsc[index], *heap, index);
-
-	// サブリソース書き込み
 	WriteSubResource(filePath, index);
 
-	vbIndex = ++index;
+	++index;
+	Descriptor::Get().CBV(*rsc[index], *heap, index);
+	Desc.Map(rsc[index], (void**)&con);
 
-	vert[0] = Vertex(Vec3f(0.0f, 0.0f, 0.0f), Vec2f(0.0f, 0.0f));
-	vert[1] = Vertex(Vec3f(640.0f, 0.0f, 0.0f), Vec2f(1.0f, 0.0f));
-	vert[2] = Vertex(Vec3f(0.0f, 640.0f, 0.0f), Vec2f(0.0f, 1.0f));
-	vert[3] = Vertex(Vec3f(640.0f, 640.0f, 0.0f), Vec2f(1.0f, 1.0f));
-
+	++index;
 	if (FAILED(CreateVB(index)))
 	{
 		func::DebugLog("頂点リソース生成：失敗");
 		return -1;
 	}
 
-	void* data = nullptr;
 	rsc[index]->Map(0, nullptr, &data);
 	memcpy(data, vert.data(), sizeof(vert[0]) * vert.size());
 	rsc[index]->Unmap(0, nullptr);
@@ -75,8 +68,12 @@ unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root
 	list.lock()->SetRoot(root);
 	list.lock()->SetPipe(pipe);
 
+	con->reverse = reverse;
+	con->uvPos   = uvPos;
+	con->uvSize  = uvSize;
+
 	D3D12_VERTEX_BUFFER_VIEW vbv{};
-	vbv.BufferLocation = rsc[vbIndex]->GetGPUVirtualAddress();
+	vbv.BufferLocation = (*rsc.rbegin())->GetGPUVirtualAddress();
 	vbv.SizeInBytes    = unsigned int(sizeof(vert[0]) * vert.size());
 	vbv.StrideInBytes  = sizeof(vert[0]);
 
@@ -85,10 +82,10 @@ unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root
 	list.lock()->SetHeap(&heap, 1);
 
 	unsigned int index = 0;
-	for (int i = 0; i < RSC_MAX - 2; ++i)
+	for (unsigned int i = 0; i < RSC_MAX - 1; ++i)
 	{
 		list.lock()->GraphicTable(i, heap, i);
-		index = unsigned int(i);
+		index = i;
 	}
 
 	return ++index;
@@ -119,7 +116,7 @@ long Texture::CreateCB(const unsigned int index)
 	dsc.Layout           = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	dsc.MipLevels        = 1;
 	dsc.SampleDesc       = { 1, 0 };
-	dsc.Width            = sizeof(vert[0]) * vert.size();
+	dsc.Width            = (sizeof(Constant) + 0xff) &~ 0xff;
 
 	return Descriptor::Get().CreateRsc(&rsc[index], hProp, dsc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 }

@@ -1,9 +1,9 @@
 #pragma once
 #include "../etc/Define.h"
 #include "../etc/Func.h"
-#include "../etc/Vector2.h"
 #include "../etc/Vector3.h"
 #include <vector>
+#include <DirectXMath.h>
 
 class MyLib;
 
@@ -18,6 +18,22 @@ struct Vertex
 class Texture
 {
 	friend MyLib;
+
+	// 定数
+	struct Constant
+	{
+		// 行列
+		DirectX::XMFLOAT4X4 matrix;
+
+		// uv座標
+		Vec2f uvPos;
+
+		// uvサイズ
+		Vec2f uvSize;
+
+		// 反転
+		Vec2f reverse;
+	};
 
 public:
 	Texture(const std::string& filePath);
@@ -35,6 +51,20 @@ public:
 	// 画像の座標
 	Vec2f pos;
 
+	// 画像のサイズ
+	Vec2f size;
+
+	// 画像のuv座標
+	Vec2f uvPos;
+
+	// 画像のuvサイズ
+	Vec2f uvSize;
+
+	// 画像の回転
+	float rotate;
+
+	// 画像の反転
+	Vec2f reverse;
 private:
 	// 定数リソース生成
 	long CreateCB(const unsigned int index);
@@ -55,4 +85,7 @@ private:
 	std::vector<ID3D12Resource*> rsc;
 
 	unsigned int vbIndex;
+
+	Constant* con;
+	void* data;
 };

@@ -1,6 +1,8 @@
 #pragma once
 #include "../etc/Define.h"
 
+struct IDXGIFactory;
+
 class Device
 {
 public:
@@ -14,7 +16,9 @@ private:
 	Device(const Device&) = delete;
 	void operator=(const Device&) = delete;
 
+	long CreateFactory();
 	long CreateDevice();
 
+	IDXGIFactory* factory;
 	ID3D12Device* dev;
 };
