@@ -102,7 +102,7 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 {
 #ifdef _DEBUG
 	ID3D12Debug* debug = nullptr;
-	D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
+	auto hr = D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
 	debug->EnableDebugLayer();
 #endif
 
