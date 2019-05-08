@@ -93,7 +93,7 @@ void Descriptor::CBV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size
 void Descriptor::DSV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index)
 {
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsc{};
-	dsc.Format = DXGI_FORMAT::DXGI_FORMAT_D32_FLOAT;
+	dsc.Format        = DXGI_FORMAT::DXGI_FORMAT_D32_FLOAT;
 	dsc.ViewDimension = D3D12_DSV_DIMENSION::D3D12_DSV_DIMENSION_TEXTURE2D;
 
 	auto handle = heap.GetCPUDescriptorHandleForHeapStart();

@@ -63,10 +63,10 @@ private:
 	// クラスのインスタンス
 	void Instance(const Vec2& pos, const Vec2& size, void* parent);
 
-	// 変数初期化
+	// 初期化
 	void Init();
 
-	// 初期化
+	// リソース生成
 	void CreateRes();
 
 	// ウィンドウ

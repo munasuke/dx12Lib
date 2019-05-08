@@ -100,11 +100,6 @@ void MyLib::PipeLine(const std::string& name, const std::string& rootName, const
 // クラスのインスタンス
 void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 {
-#ifdef _DEBUG
-	ID3D12Debug* debug = nullptr;
-	auto hr = D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
-	debug->EnableDebugLayer();
-#endif
 
 	win   = std::make_shared<Window>(pos, size, parent);
 	list  = std::make_shared<List>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
@@ -122,17 +117,22 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	PipeLine("tex", "tex", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0, 1 }, false);
 }
 
-// 変数初期化
+// 初期化
 void MyLib::Init()
 {
 	heap     = nullptr;
 	rsc      = nullptr;
 	constant = nullptr;
 
+#ifdef _DEBUG
+	ID3D12Debug* debug = nullptr;
+	auto hr = D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
+	debug->EnableDebugLayer();
+#endif
 	CreateRes();
 }
 
-// 初期化
+// リソース生成
 void MyLib::CreateRes()
 {
 	Desc.CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
@@ -152,13 +152,13 @@ void MyLib::CreateRes()
 	desc.Layout           = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	desc.MipLevels        = 1;
 	desc.SampleDesc       = { 1, 0 };
-	desc.Width            = (sizeof(Constant) + 0xff) & ~0xff;
+	desc.Width            = (sizeof(Constant) + 0xff) &~0xff;
 
 	Desc.CreateRsc(&rsc, prop, desc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 
 	Desc.CBV(*rsc, *heap);
 
-	Desc.Map(rsc, (void**)&constant);
+	Desc.Map(rsc, (void**)(&constant));
 }
 
 // タイトル名変更
@@ -266,6 +266,9 @@ void MyLib::Draw(Texture& tex, const float alpha)
 		tex.rotate,
 		DirectX::XMLoadFloat3(&Convert3(tex.pos))
 	));
+
+	list->SetHeap(&heap, 1);
+	list->GraphicTable(index, heap, 0);
 
 	tex.Draw(list);
 }

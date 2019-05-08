@@ -1,6 +1,7 @@
 #pragma once
 #include "../etc/Define.h"
 #include "../etc/Func.h"
+#include "../etc/Vector2.h"
 #include <unordered_map>
 
 class TexLoader
@@ -23,6 +24,9 @@ public:
 
 	// サブリソース取得
 	std::shared_ptr<D3D12_SUBRESOURCE_DATA> GetSub(const std::string& filePath);
+
+	// サイズ取得
+	Vec2f GetSize(const std::string& filePath);
 private:
 	TexLoader();
 	TexLoader(const TexLoader&) = delete;

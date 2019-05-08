@@ -79,3 +79,9 @@ std::shared_ptr<D3D12_SUBRESOURCE_DATA> TexLoader::GetSub(const std::string& fil
 
 	return sub[filePath];
 }
+
+Vec2f TexLoader::GetSize(const std::string& filePath)
+{
+	return Vec2f(float(rsc[filePath]->GetDesc().Width), 
+		float(rsc[filePath]->GetDesc().Height));
+}

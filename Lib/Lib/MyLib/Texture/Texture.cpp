@@ -10,6 +10,7 @@
 #define RSC_MAX 3
 #define VERT_MAX 4
 
+// コンストラクタ
 Texture::Texture(const std::string& filePath) :
 	heap(nullptr), con(nullptr), data(nullptr)
 {
@@ -19,6 +20,7 @@ Texture::Texture(const std::string& filePath) :
 	Load(filePath);
 }
 
+// デストラクタ
 Texture::~Texture()
 {
 	for (auto& r : rsc)
@@ -28,11 +30,12 @@ Texture::~Texture()
 	Release(heap);
 }
 
+// 読み込み
 int Texture::Load(const std::string& filePath)
 {
 	// ヒープ生成
 	Descriptor::Get().CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-		D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
+		D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, RSC_MAX - 1);
 
 	unsigned int index = 0;
 
@@ -41,11 +44,14 @@ int Texture::Load(const std::string& filePath)
 		return -1;
 	}
 
+	size = TexLoader::Get().GetSize(filePath);
+	uvSize = size;
 	rsc[index] = TexLoader::Get().GetRsc(filePath);
 	Descriptor::Get().SRV(*rsc[index], *heap, index);
 	WriteSubResource(filePath, index);
 
 	++index;
+	CreateCB(index);
 	Descriptor::Get().CBV(*rsc[index], *heap, index);
 	Desc.Map(rsc[index], (void**)&con);
 
@@ -63,6 +69,7 @@ int Texture::Load(const std::string& filePath)
 	return 0;
 }
 
+// 描画準備
 unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root, std::weak_ptr<Pipe> pipe)
 {
 	list.lock()->SetRoot(root);
@@ -91,6 +98,7 @@ unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root
 	return ++index;
 }
 
+// 描画
 void Texture::Draw(std::weak_ptr<List> list)
 {
 	list.lock()->GetList()->IASetPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -98,6 +106,7 @@ void Texture::Draw(std::weak_ptr<List> list)
 	list.lock()->GetList()->DrawInstanced(4, 1, 0, 0);
 }
 
+// 定数リソース生成
 long Texture::CreateCB(const unsigned int index)
 {
 	D3D12_HEAP_PROPERTIES hProp{};
@@ -121,6 +130,7 @@ long Texture::CreateCB(const unsigned int index)
 	return Descriptor::Get().CreateRsc(&rsc[index], hProp, dsc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 }
 
+// 頂点リソース生成
 long Texture::CreateVB(const unsigned int index)
 {
 	D3D12_HEAP_PROPERTIES hProp{};
@@ -144,6 +154,7 @@ long Texture::CreateVB(const unsigned int index)
 	return Descriptor::Get().CreateRsc(&rsc[index], hProp, dsc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 }
 
+// サブリソース書き込み
 long Texture::WriteSubResource(const std::string& path, const size_t& index)
 {
 	auto sub = TexLoader::Get().GetSub(path);
@@ -163,6 +174,7 @@ long Texture::WriteSubResource(const std::string& path, const size_t& index)
 	return hr;
 }
 
+// 画像サイズ
 Vec2 Texture::GetTexSize() const
 {
 	return Vec2();
