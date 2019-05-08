@@ -10,7 +10,6 @@ int main()
 	p.pos[3] = Vec2f(100.0f, 100.0f);
 
 	Texture tex("Image/brides.png");
-
 	while (lib.CheckMsg())
 	{
 		lib.Clear();

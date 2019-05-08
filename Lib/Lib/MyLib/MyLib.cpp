@@ -120,15 +120,16 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 // ‰Šú‰»
 void MyLib::Init()
 {
-	heap     = nullptr;
-	rsc      = nullptr;
-	constant = nullptr;
-
 #ifdef _DEBUG
 	ID3D12Debug* debug = nullptr;
 	auto hr = D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
 	debug->EnableDebugLayer();
 #endif
+
+	heap     = nullptr;
+	rsc      = nullptr;
+	constant = nullptr;
+
 	CreateRes();
 }
 

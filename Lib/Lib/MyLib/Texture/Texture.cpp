@@ -33,20 +33,19 @@ Texture::~Texture()
 // “Ç‚Ýž‚Ý
 int Texture::Load(const std::string& filePath)
 {
-	// ƒq[ƒv¶¬
+	// ƒq[ƒv
 	Descriptor::Get().CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
 		D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, RSC_MAX - 1);
-
-	unsigned int index = 0;
 
 	if (FAILED(TexLoader::Get().Load(filePath)))
 	{
 		return -1;
 	}
 
-	size = TexLoader::Get().GetSize(filePath);
-	uvSize = size;
+	unsigned int index = 0;
 	rsc[index] = TexLoader::Get().GetRsc(filePath);
+	size       = TexLoader::Get().GetSize(filePath);
+	uvSize     = size;
 	Descriptor::Get().SRV(*rsc[index], *heap, index);
 	WriteSubResource(filePath, index);
 
@@ -62,9 +61,9 @@ int Texture::Load(const std::string& filePath)
 		return -1;
 	}
 
-	rsc[index]->Map(0, nullptr, &data);
+	Desc.Map(rsc[index], (void**)&data);
 	memcpy(data, vert.data(), sizeof(vert[0]) * vert.size());
-	rsc[index]->Unmap(0, nullptr);
+	Desc.UnMap(rsc[index]);
 
 	return 0;
 }

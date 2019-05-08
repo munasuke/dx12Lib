@@ -59,12 +59,6 @@ public:
 
 	// ‰æ‘œ‚ÌuvƒTƒCƒY
 	Vec2f uvSize;
-
-	// ‰æ‘œ‚Ì‰ñ“]
-	float rotate;
-
-	// ‰æ‘œ‚Ì”½“]
-	Vec2f reverse;
 private:
 	// ’è”ƒŠƒ\[ƒX¶¬
 	long CreateCB(const unsigned int index);
@@ -78,8 +72,6 @@ private:
 	// •`‰æ€”õ
 	unsigned int SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root, std::weak_ptr<Pipe> pipe);
 
-	void ChangePos(std::vector<Vertex>& vert);
-
 	std::vector<Vertex> vert;
 	ID3D12DescriptorHeap* heap;
 	std::vector<ID3D12Resource*> rsc;
@@ -88,4 +80,10 @@ private:
 
 	Constant* con;
 	void* data;
+
+	// ‰æ‘œ‚Ì‰ñ“]
+	float rotate;
+
+	// ‰æ‘œ‚Ì”½“]
+	Vec2f reverse;
 };
