@@ -3,6 +3,7 @@
 #include "etc/Vector3.h"
 #include "Primitive/Primitive.h"
 #include "Texture/Texture.h"
+#include "Input/Input.h"
 #include <string>
 #include <unordered_map>
 

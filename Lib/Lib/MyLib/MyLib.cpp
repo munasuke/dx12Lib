@@ -28,6 +28,12 @@ const D3D12_INPUT_ELEMENT_DESC inputs[] = {
 // コンストラクタ
 MyLib::MyLib(const Vec2& size, const Vec2& pos)
 {
+#ifdef _DEBUG
+	ID3D12Debug* debug = nullptr;
+	auto hr = D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
+	debug->EnableDebugLayer();
+#endif
+
 	Init();
 
 	constant->winSize = Vec2f(float(size.x), float(size.y));
@@ -60,6 +66,7 @@ MyLib::~MyLib()
 {
 	Desc.UnMap(rsc);
 	Release(rsc);
+	Release(heap);
 }
 
 //	ルートのインスタンス
@@ -100,7 +107,6 @@ void MyLib::PipeLine(const std::string& name, const std::string& rootName, const
 // クラスのインスタンス
 void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 {
-
 	win   = std::make_shared<Window>(pos, size, parent);
 	list  = std::make_shared<List>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
 	queue = std::make_shared<Queue>(D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
@@ -120,12 +126,6 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 // 初期化
 void MyLib::Init()
 {
-#ifdef _DEBUG
-	ID3D12Debug* debug = nullptr;
-	auto hr = D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
-	debug->EnableDebugLayer();
-#endif
-
 	heap     = nullptr;
 	rsc      = nullptr;
 	constant = nullptr;
@@ -256,17 +256,15 @@ void MyLib::Draw(Primitive& prim, const Vec3f& color, const float alpha)
 // 画像描画
 void MyLib::Draw(Texture& tex, const float alpha, const bool turnX, const bool turnY)
 {
-	tex.vert[0] = { Vec3f(0.0f, 0.0f), Vec2f(0.0f, 0.0f) };
-	tex.vert[1] = { Vec3f(Vec2f(constant->winSize.x, 0.0f)), Vec2f(1.0f, 0.0f) };
-	tex.vert[2] = { Vec3f(Vec2f(0.0f, constant->winSize.y)), Vec2f(0.0f, 1.0f) };
-	tex.vert[3] = { Vec3f(constant->winSize), Vec2f(1.0f) };
+	//tex.vert[0] = { Vec3f(0.0f, 0.0f),                       Vec2f(0.0f, 0.0f) };
+	//tex.vert[1] = { Vec3f(Vec2f(constant->winSize.x, 0.0f)), Vec2f(1.0f, 0.0f) };
+	//tex.vert[2] = { Vec3f(Vec2f(0.0f, constant->winSize.y)), Vec2f(0.0f, 1.0f) };
+	//tex.vert[3] = { Vec3f(constant->winSize),                Vec2f(1.0f) };
 
-	memcpy(tex.data, tex.vert.data(), sizeof(tex.vert[0]) * tex.vert.size());
+	//memcpy(tex.data, tex.vert.data(), sizeof(tex.vert[0]) * tex.vert.size());
 
 	constant->alpha = alpha;
 	tex.reverse = Vec2f(turnX ? 1.0f : 0.0f, turnY ? 1.0f : 0.0f);
-
-	unsigned int index = tex.SetDraw(list, root["tex"], pipe["tex"]);
 
 	DirectX::XMStoreFloat4x4(&tex.con->matrix, DirectX::XMMatrixAffineTransformation2D(
 		DirectX::XMLoadFloat2(&Convert2(tex.size / constant->winSize)),
@@ -275,6 +273,7 @@ void MyLib::Draw(Texture& tex, const float alpha, const bool turnX, const bool t
 		DirectX::XMLoadFloat3(&Convert3(tex.pos))
 	));
 
+	unsigned int index = tex.SetDraw(list, root["tex"], pipe["tex"]);
 	list->SetHeap(&heap, 1);
 	list->GraphicTable(index, heap, 0);
 
@@ -290,6 +289,8 @@ void MyLib::Execution(void) const
 
 	ID3D12CommandList* lists[] = { list->GetList() };
 	queue->Execution(lists, _countof(lists));
+
 	swap->Present();
+
 	fence->Wait();
 }

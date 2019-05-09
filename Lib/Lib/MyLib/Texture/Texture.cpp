@@ -10,6 +10,13 @@
 #define RSC_MAX 3
 #define VERT_MAX 4
 
+Texture::Texture() :
+	heap(nullptr), con(nullptr), data(nullptr)
+{
+	rsc.assign(RSC_MAX, nullptr);
+	vert.assign(VERT_MAX, Vertex());
+}
+
 // コンストラクタ
 Texture::Texture(const std::string& filePath) :
 	heap(nullptr), con(nullptr), data(nullptr)
@@ -18,6 +25,12 @@ Texture::Texture(const std::string& filePath) :
 	vert.assign(VERT_MAX, Vertex());
 
 	Load(filePath);
+	vert[0] = { Vec3f(0.0f, 0.0f),       Vec2f(0.0f, 0.0f) };
+	vert[1] = { Vec3f(Vec2f(640, 0.0f)), Vec2f(1.0f, 0.0f) };
+	vert[2] = { Vec3f(Vec2f(0.0f, 640)), Vec2f(0.0f, 1.0f) };
+	vert[3] = { Vec3f(Vec2f(640, 640)),  Vec2f(1.0f) };
+
+	memcpy(data, vert.data(), sizeof(vert[0]) * vert.size());
 }
 
 // デストラクタ

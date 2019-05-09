@@ -49,7 +49,7 @@ long SwapChain::CreateSwapChain(std::weak_ptr<Window> win, std::weak_ptr<Queue> 
 	dsc.Width       = rec.right;
 
 	auto hr = factory->CreateSwapChainForHwnd(queue.lock()->Get(), HWND(win.lock()->Get()), 
-		&dsc, nullptr, nullptr, (IDXGISwapChain1 * *)(&swap));
+		&dsc, nullptr, nullptr, (IDXGISwapChain1**)(&swap));
 	if (FAILED(hr))
 	{
 		func::DebugLog("スワップチェイン生成：失敗");

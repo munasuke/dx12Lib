@@ -36,6 +36,7 @@ class Texture
 	};
 
 public:
+	Texture();
 	Texture(const std::string& filePath);
 	~Texture();
 
@@ -72,13 +73,19 @@ private:
 	// 描画準備
 	unsigned int SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root, std::weak_ptr<Pipe> pipe);
 
+	// 頂点
 	std::vector<Vertex> vert;
+
+	// ヒープ
 	ID3D12DescriptorHeap* heap;
+
+	// リソース
 	std::vector<ID3D12Resource*> rsc;
 
-	unsigned int vbIndex;
-
+	// 定数データ
 	Constant* con;
+
+	// 頂点データ
 	void* data;
 
 	// 画像の回転
