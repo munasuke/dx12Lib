@@ -2,5 +2,10 @@
 
 float4 main(Out o) : SV_TARGET
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+	if (color.a <= 0.0f)
+	{
+		discard;
+	}
+
+	return color;
 }

@@ -46,7 +46,7 @@ public:
 	void Draw(std::weak_ptr<List> list);
 
 	// 画像サイズ取得
-	Vec2 GetTexSize()const;
+	Vec2f GetTexSize(const std::string& filePath)const;
 
 	// 画像の座標
 	Vec2f pos;
@@ -54,11 +54,11 @@ public:
 	// 画像のサイズ
 	Vec2f size;
 
-	// 画像のuv座標
-	Vec2f uvPos;
+	// 画像の分割地点の左上座標
+	Vec2f offsetPos;
 
-	// 画像のuvサイズ
-	Vec2f uvSize;
+	// 画像の分割サイズ
+	Vec2f divSize;
 private:
 	// 定数リソース生成
 	long CreateCB(const unsigned int index);

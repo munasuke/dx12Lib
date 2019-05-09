@@ -23,6 +23,7 @@
 Texture2D<float4> tex : register(t0);
 SamplerState smp      : register(s0);
 
+// 情報
 cbuffer Info : register(b0)
 {
 	float4x4 mat;
@@ -31,6 +32,7 @@ cbuffer Info : register(b0)
 	float2 reverse;
 }
 
+// ウィンドウ
 cbuffer Window : register(b1)
 {
 	float4 color;

@@ -10,10 +10,11 @@ int main()
 	p.pos[3] = Vec2f(100.0f, 100.0f);
 
 	Texture tex("Image/brides.png");
+	tex.size = Vec2f(lib.GetWinSize().x, lib.GetWinSize().y);
 	while (lib.CheckMsg())
 	{
 		lib.Clear();
-		lib.Draw(p);
+		lib.Draw(p, Vec3f(1.0f, 0.0f, 0.0f));
 		lib.Draw(tex);
 		lib.Execution();
 	}

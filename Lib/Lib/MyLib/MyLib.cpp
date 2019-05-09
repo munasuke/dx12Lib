@@ -217,7 +217,7 @@ void MyLib::Clear(void) const
 }
 
 // プリミティブ描画
-void MyLib::Draw(Primitive& prim)
+void MyLib::Draw(Primitive& prim, const Vec3f& color, const float alpha)
 {
 	prim.UpData();
 	list->SetRoot(root["prim"]);
@@ -236,11 +236,17 @@ void MyLib::Draw(Primitive& prim)
 		break;
 	}
 
+	constant->alpha = alpha;
+	constant->color = color;
+
 	D3D12_VERTEX_BUFFER_VIEW view{};
 	view.BufferLocation = prim.rsc->GetGPUVirtualAddress();
 	view.SizeInBytes    = unsigned int(prim.rsc->GetDesc().Width);
 	view.StrideInBytes  = sizeof(prim.pos[0]);
 	list->VertexView(view);
+
+	list->SetHeap(&heap, 1);
+	list->GraphicTable(0, heap, 0);
 
 	list->Topology(D3D12_PRIMITIVE_TOPOLOGY(prim.type));
 
@@ -248,7 +254,7 @@ void MyLib::Draw(Primitive& prim)
 }
 
 // 画像描画
-void MyLib::Draw(Texture& tex, const float alpha)
+void MyLib::Draw(Texture& tex, const float alpha, const bool turnX, const bool turnY)
 {
 	tex.vert[0] = { Vec3f(0.0f, 0.0f), Vec2f(0.0f, 0.0f) };
 	tex.vert[1] = { Vec3f(Vec2f(constant->winSize.x, 0.0f)), Vec2f(1.0f, 0.0f) };
@@ -258,6 +264,7 @@ void MyLib::Draw(Texture& tex, const float alpha)
 	memcpy(tex.data, tex.vert.data(), sizeof(tex.vert[0]) * tex.vert.size());
 
 	constant->alpha = alpha;
+	tex.reverse = Vec2f(turnX ? 1.0f : 0.0f, turnY ? 1.0f : 0.0f);
 
 	unsigned int index = tex.SetDraw(list, root["tex"], pipe["tex"]);
 

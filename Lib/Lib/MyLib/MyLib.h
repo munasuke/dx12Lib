@@ -40,10 +40,10 @@ public:
 	void Clear(void) const;
 
 	// プリミティブ描画
-	void Draw(Primitive& prim);
+	void Draw(Primitive& prim, const Vec3f& color, const float alpha = 1.0f);
 
 	// 画像描画
-	void Draw(Texture& tex, const float alpha = 1.0f);
+	void Draw(Texture& tex, const float alpha = 1.0f, const bool turnX = false, const bool turnY = false);
 
 	// 実行
 	void Execution(void) const;

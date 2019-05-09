@@ -45,7 +45,7 @@ int Texture::Load(const std::string& filePath)
 	unsigned int index = 0;
 	rsc[index] = TexLoader::Get().GetRsc(filePath);
 	size       = TexLoader::Get().GetSize(filePath);
-	uvSize     = size;
+	divSize    = size;
 	Descriptor::Get().SRV(*rsc[index], *heap, index);
 	WriteSubResource(filePath, index);
 
@@ -75,8 +75,8 @@ unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root
 	list.lock()->SetPipe(pipe);
 
 	con->reverse = reverse;
-	con->uvPos   = uvPos;
-	con->uvSize  = uvSize;
+	con->uvPos   = offsetPos;
+	con->uvSize  = divSize;
 
 	D3D12_VERTEX_BUFFER_VIEW vbv{};
 	vbv.BufferLocation = (*rsc.rbegin())->GetGPUVirtualAddress();
@@ -174,7 +174,7 @@ long Texture::WriteSubResource(const std::string& path, const size_t& index)
 }
 
 // ‰æ‘œƒTƒCƒY
-Vec2 Texture::GetTexSize() const
+Vec2f Texture::GetTexSize(const std::string& filePath) const
 {
-	return Vec2();
+	return TexLoader::Get().GetSize(filePath);
 }

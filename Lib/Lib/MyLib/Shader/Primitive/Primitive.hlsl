@@ -1,5 +1,7 @@
 // ルートシグネチャの定義
 #define RS "RootFlags(ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT),"\
+                    "DescriptorTable(CBV(b0, numDescriptors = 1, space = 0, offset = DESCRIPTOR_RANGE_OFFSET_APPEND), "\
+                                    "visibility = SHADER_VISIBILITY_ALL),"\
                     "StaticSampler(s0, "\
                                   "filter         = FILTER_MIN_MAG_MIP_LINEAR, "\
                                   "addressU       = TEXTURE_ADDRESS_WRAP, "\
@@ -15,6 +17,12 @@
                                   "visibility     = SHADER_VISIBILITY_ALL)"
 
 SamplerState smp      : register(s0);
+
+cbuffer Window : register(b0)
+{
+	float4 color;
+	float2 window;
+}
 
 // 入力
 struct Input
