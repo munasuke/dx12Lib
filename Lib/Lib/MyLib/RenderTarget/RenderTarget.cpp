@@ -23,6 +23,7 @@ RenderTarget::~RenderTarget()
 	Release(heap);
 }
 
+// クリア
 void RenderTarget::Clear(std::weak_ptr<List> list)
 {
 	auto handle = heap->GetCPUDescriptorHandleForHeapStart();
@@ -32,13 +33,14 @@ void RenderTarget::Clear(std::weak_ptr<List> list)
 	list.lock()->GetList()->ClearRenderTargetView(handle, color, 0, nullptr);
 }
 
+// レンダーターゲット生成
 long RenderTarget::CreateRenderTarget()
 {
 	DXGI_SWAP_CHAIN_DESC1 dsc{};
 	swap.lock()->Get()->GetDesc1(&dsc);
 	rsc.resize(dsc.BufferCount);
 
-	auto hr = Descriptor::Get().CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_RTV,
+	auto hr = Desc.CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_RTV,
 		D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_NONE, rsc.size());
 	if (FAILED(hr))
 	{
@@ -49,7 +51,12 @@ long RenderTarget::CreateRenderTarget()
 	for (int i = 0; i < rsc.size(); ++i)
 	{
 		hr = swap.lock()->Get()->GetBuffer(i, IID_PPV_ARGS(&rsc[i]));
-		Descriptor::Get().RTV(*rsc[i], *heap, i);
+		if (FAILED(hr))
+		{
+			func::DebugLog("リソース生成：失敗");
+			break;
+		}
+		Desc.RTV(rsc[i], heap, i);
 	}
 
 	return hr;

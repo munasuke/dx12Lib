@@ -10,14 +10,12 @@
 SwapChain::SwapChain(std::weak_ptr<Window> win, std::weak_ptr<Queue> queue) :
 	factory(nullptr), swap(nullptr)
 {
-	CreateFactory();
 	CreateSwapChain(win, queue);
 }
 
 SwapChain::~SwapChain()
 {
 	Release(swap);
-	Release(factory);
 }
 
 // ファクトリー生成
@@ -48,7 +46,7 @@ long SwapChain::CreateSwapChain(std::weak_ptr<Window> win, std::weak_ptr<Queue> 
 	dsc.SwapEffect  = DXGI_SWAP_EFFECT::DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	dsc.Width       = rec.right;
 
-	auto hr = factory->CreateSwapChainForHwnd(queue.lock()->Get(), HWND(win.lock()->Get()), 
+	auto hr = Factory->CreateSwapChainForHwnd(queue.lock()->Get(), HWND(win.lock()->Get()), 
 		&dsc, nullptr, nullptr, (IDXGISwapChain1**)(&swap));
 	if (FAILED(hr))
 	{

@@ -25,12 +25,6 @@ Texture::Texture(const std::string& filePath) :
 	vert.assign(VERT_MAX, Vertex());
 
 	Load(filePath);
-	vert[0] = { Vec3f(0.0f, 0.0f),       Vec2f(0.0f, 0.0f) };
-	vert[1] = { Vec3f(Vec2f(640, 0.0f)), Vec2f(1.0f, 0.0f) };
-	vert[2] = { Vec3f(Vec2f(0.0f, 640)), Vec2f(0.0f, 1.0f) };
-	vert[3] = { Vec3f(Vec2f(640, 640)),  Vec2f(1.0f) };
-
-	memcpy(data, vert.data(), sizeof(vert[0]) * vert.size());
 }
 
 // デストラクタ
@@ -46,37 +40,18 @@ Texture::~Texture()
 // 読み込み
 int Texture::Load(const std::string& filePath)
 {
-	// ヒープ
-	Descriptor::Get().CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-		D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, RSC_MAX - 1);
-
 	if (FAILED(TexLoader::Get().Load(filePath)))
 	{
 		return -1;
 	}
 
-	unsigned int index = 0;
-	rsc[index] = TexLoader::Get().GetRsc(filePath);
-	size       = TexLoader::Get().GetSize(filePath);
-	divSize    = size;
-	Descriptor::Get().SRV(*rsc[index], *heap, index);
-	WriteSubResource(filePath, index);
+	rsc[0]         = TexLoader::Get().GetRsc(filePath);
+	size           = TexLoader::Get().GetSize(filePath);
+	divSize        = size;
+	rotate         = 0;
+	this->filePath = filePath;
 
-	++index;
-	CreateCB(index);
-	Descriptor::Get().CBV(*rsc[index], *heap, index);
-	Desc.Map(rsc[index], (void**)&con);
-
-	++index;
-	if (FAILED(CreateVB(index)))
-	{
-		func::DebugLog("頂点リソース生成：失敗");
-		return -1;
-	}
-
-	Desc.Map(rsc[index], (void**)&data);
-	memcpy(data, vert.data(), sizeof(vert[0]) * vert.size());
-	Desc.UnMap(rsc[index]);
+	Init();
 
 	return 0;
 }
@@ -93,10 +68,10 @@ unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root
 
 	D3D12_VERTEX_BUFFER_VIEW vbv{};
 	vbv.BufferLocation = (*rsc.rbegin())->GetGPUVirtualAddress();
-	vbv.SizeInBytes    = unsigned int(sizeof(vert[0]) * vert.size());
+	vbv.SizeInBytes    = unsigned int((*rsc.rbegin())->GetDesc().Width);
 	vbv.StrideInBytes  = sizeof(vert[0]);
 
-	list.lock()->GetList()->IASetVertexBuffers(0, 1, &vbv);
+	list.lock()->VertexView(vbv);
 
 	list.lock()->SetHeap(&heap, 1);
 
@@ -113,9 +88,48 @@ unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root
 // 描画
 void Texture::Draw(std::weak_ptr<List> list)
 {
-	list.lock()->GetList()->IASetPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	list.lock()->Topology(D3D12_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-	list.lock()->GetList()->DrawInstanced(4, 1, 0, 0);
+	list.lock()->DrawVertex(vert.size());
+}
+
+// 初期化
+int Texture::Init()
+{
+	Desc.CreateHeap(&heap, D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
+		D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, RSC_MAX - 1);
+
+	unsigned int index = 0;
+	Desc.SRV(rsc[index], heap, index);
+	WriteSubResource(filePath, index);
+
+	++index;
+	if (FAILED(CreateCB(index)))
+	{
+		func::DebugLog("定数リソース生成：失敗");
+		return -1;
+	}
+	Desc.CBV(rsc[index], heap, index);
+	Desc.Map(rsc[index], (void**)(&con));
+
+	++index;
+	if (FAILED(CreateVB(index)))
+	{
+		func::DebugLog("頂点リソース生成：失敗");
+		return -1;
+	}
+	Desc.Map(rsc[index], (void**)(&data));
+	//memcpy(data, vert.data(), sizeof(vert[0]) * vert.size());
+	//Desc.UnMap(rsc[index]);
+
+	//vert[0] = { Vec3f(0.0f, 0.0f),       Vec2f(0.0f, 0.0f) };
+	//vert[1] = { Vec3f(Vec2f(640, 0.0f)), Vec2f(1.0f, 0.0f) };
+	//vert[2] = { Vec3f(Vec2f(0.0f, 640)), Vec2f(0.0f, 1.0f) };
+	//vert[3] = { Vec3f(Vec2f(640, 640)),  Vec2f(1.0f, 1.0f) };
+
+	//memcpy(data, vert.data(), sizeof(vert[0]) * vert.size());
+
+	return 0;
 }
 
 // 定数リソース生成

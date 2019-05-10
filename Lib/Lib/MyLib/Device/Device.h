@@ -11,6 +11,7 @@ public:
 	static Device& Get();
 
 	ID3D12Device* GetDev()const;
+	IDXGIFactory4* GetFactory()const;
 private:
 	Device();
 	Device(const Device&) = delete;
@@ -19,6 +20,6 @@ private:
 	long CreateFactory();
 	long CreateDevice();
 
-	IDXGIFactory* factory;
+	IDXGIFactory4* factory;
 	ID3D12Device* dev;
 };

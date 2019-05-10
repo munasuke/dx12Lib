@@ -28,6 +28,8 @@ const D3D12_INPUT_ELEMENT_DESC inputs[] = {
 // コンストラクタ
 MyLib::MyLib(const Vec2& size, const Vec2& pos)
 {
+	CoInitializeEx(nullptr, COINIT::COINIT_APARTMENTTHREADED);
+
 #ifdef _DEBUG
 	ID3D12Debug* debug = nullptr;
 	auto hr = D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
@@ -157,7 +159,7 @@ void MyLib::CreateRes()
 
 	Desc.CreateRsc(&rsc, prop, desc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 
-	Desc.CBV(*rsc, *heap);
+	Desc.CBV(rsc, heap);
 
 	Desc.Map(rsc, (void**)(&constant));
 }
@@ -210,9 +212,12 @@ bool MyLib::CheckMsg(void) const
 void MyLib::Clear(void) const
 {
 	list->Reset();
+
 	list->Viewport(GetWinSize());
 	list->Scissor(GetWinSize());
+
 	list->Barrier(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_RENDER_TARGET, rt->GetRsc());
+
 	rt->Clear(list);
 }
 
@@ -256,12 +261,12 @@ void MyLib::Draw(Primitive& prim, const Vec3f& color, const float alpha)
 // 画像描画
 void MyLib::Draw(Texture& tex, const float alpha, const bool turnX, const bool turnY)
 {
-	//tex.vert[0] = { Vec3f(0.0f, 0.0f),                       Vec2f(0.0f, 0.0f) };
-	//tex.vert[1] = { Vec3f(Vec2f(constant->winSize.x, 0.0f)), Vec2f(1.0f, 0.0f) };
-	//tex.vert[2] = { Vec3f(Vec2f(0.0f, constant->winSize.y)), Vec2f(0.0f, 1.0f) };
-	//tex.vert[3] = { Vec3f(constant->winSize),                Vec2f(1.0f) };
+	tex.vert[0] = { Vec3f(0.0f, 0.0f),                       Vec2f(0.0f, 0.0f) };
+	tex.vert[1] = { Vec3f(Vec2f(constant->winSize.x, 0.0f)), Vec2f(1.0f, 0.0f) };
+	tex.vert[2] = { Vec3f(Vec2f(0.0f, constant->winSize.y)), Vec2f(0.0f, 1.0f) };
+	tex.vert[3] = { Vec3f(constant->winSize),                Vec2f(1.0f) };
 
-	//memcpy(tex.data, tex.vert.data(), sizeof(tex.vert[0]) * tex.vert.size());
+	memcpy(tex.data, tex.vert.data(), sizeof(tex.vert[0]) * tex.vert.size());
 
 	constant->alpha = alpha;
 	tex.reverse = Vec2f(turnX ? 1.0f : 0.0f, turnY ? 1.0f : 0.0f);

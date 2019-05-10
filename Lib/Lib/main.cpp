@@ -12,37 +12,29 @@ int main()
 	Vec3f color = Vec3f(1.0f, 0.0f, 0.0f);
 
 	Texture tex("Image/brides.png");
-	tex.size = Vec2f(lib.GetWinSize().x, lib.GetWinSize().y / 2);
+	tex.size = Vec2f(float(lib.GetWinSize().x), float(lib.GetWinSize().y) / 2);
 
 	CFPSCounter fps(10);
 
 	while (lib.CheckMsg())
 	{
+		lib.Clear();
+		lib.Draw(p, color);
+		lib.Draw(tex);
+		lib.Execution();
+
 		//printf("%f\n", fps.GetFPS());
 
 		if (Input::Get().IsKey(Key::Num4))
 		{
 			tex.pos.x--;
-			//for (auto& pos : p.pos)
-			//{
-			//	pos.x--;
-			//}
 		}
 		if (Input::Get().IsKey(Key::Num6))
 		{
 			tex.pos.x++;
-			//for (auto& pos : p.pos)
-			//{
-			//	pos.x++;
-			//}
 		}
 
 		//tex.pos.y++;
-
-		lib.Clear();
-		lib.Draw(p, color);
-		lib.Draw(tex);
-		lib.Execution();
 	}
 
 	return 0;

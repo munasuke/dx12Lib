@@ -16,16 +16,16 @@ public:
 		const D3D12_RESOURCE_STATES& state, const D3D12_CLEAR_VALUE* clear = nullptr);
 
 	// RTV
-	void RTV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index = 0);
+	void RTV(ID3D12Resource* rsc, ID3D12DescriptorHeap* heap, const size_t& index = 0);
 
 	// SRVê∂ê¨
-	void SRV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index = 0);
+	void SRV(ID3D12Resource* rsc, ID3D12DescriptorHeap* heap, const size_t& index = 0);
 
 	// CBVê∂ê¨
-	void CBV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index = 0);
+	void CBV(ID3D12Resource* rsc, ID3D12DescriptorHeap* heap, const size_t& index = 0);
 
 	// DSVê∂ê¨
-	void DSV(ID3D12Resource& rsc, ID3D12DescriptorHeap& heap, const size_t& index = 0);
+	void DSV(ID3D12Resource* rsc, ID3D12DescriptorHeap* heap, const size_t& index = 0);
 
 	// É}ÉbÉv
 	long Map(ID3D12Resource* rsc, void** data);

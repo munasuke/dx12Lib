@@ -61,6 +61,9 @@ public:
 	// 画像の分割サイズ
 	Vec2f divSize;
 private:
+	// 初期化
+	int Init();
+
 	// 定数リソース生成
 	long CreateCB(const unsigned int index);
 
@@ -93,4 +96,7 @@ private:
 
 	// 画像の反転
 	Vec2f reverse;
+
+	// ファイルパス
+	std::string filePath;
 };

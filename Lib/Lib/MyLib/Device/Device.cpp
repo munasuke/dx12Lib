@@ -86,3 +86,8 @@ ID3D12Device * Device::GetDev() const
 {
 	return dev;
 }
+
+IDXGIFactory4* Device::GetFactory() const
+{
+	return factory;
+}
