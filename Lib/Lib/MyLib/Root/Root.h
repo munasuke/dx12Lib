@@ -20,6 +20,9 @@ public:
 	void Vertex(const std::string& fileName);
 	void Pixel(const std::string& fileName);
 
+	void Vertex(const int& id);
+	void Pixel(const int& id);
+
 	// ルート取得
 	ID3D12RootSignature* Get(void) const;
 	// 頂点シェーダ取得
@@ -36,6 +39,9 @@ private:
 
 	// .cso読み込み
 	long Load(const std::string& fileName, ID3DBlob** blob);
+
+	// リソース読み込み
+	long Read(const int& id, ID3DBlob** blob);
 
 	// ルート情報取得
 	long RootInfo(ID3DBlob* blob);

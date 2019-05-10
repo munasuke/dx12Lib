@@ -54,7 +54,8 @@ private:
 	void operator=(const MyLib&) = delete;
 
 	//	ルートのインスタンス
-	void RootSignature(const std::string& name, const std::initializer_list<std::string>& fileName);
+	template<typename T>
+	void RootSignature(const std::string& name, const std::initializer_list<T>& fileName);
 
 	// パイプのインスタンス
 	void PipeLine(const std::string& name, const std::string& rootName,

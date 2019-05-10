@@ -8,6 +8,7 @@
 #include "SwapChain/SwapChain.h"
 #include "RenderTarget/RenderTarget.h"
 #include "etc/Release.h"
+#include "../resource.h"
 #include <DirectXMath.h>
 
 #pragma comment(lib, "d3d12.lib")
@@ -72,7 +73,8 @@ MyLib::~MyLib()
 }
 
 //	ルートのインスタンス
-void MyLib::RootSignature(const std::string& name, const std::initializer_list<std::string>& fileName)
+template<typename T>
+void MyLib::RootSignature(const std::string& name, const std::initializer_list<T>& fileName)
 {
 	if (root.find(name) != root.end())
 	{
@@ -82,12 +84,14 @@ void MyLib::RootSignature(const std::string& name, const std::initializer_list<s
 	auto itr = fileName.begin();
 	while (itr != fileName.end())
 	{
-		root[name]->Vertex(*itr, "main", "vs_5_1");
+		root[name]->Vertex(*itr);
 		++itr;
-		root[name]->Pixel(*itr, "main", "ps_5_1");
+		root[name]->Pixel(*itr);
 		++itr;
 	}
 }
+template void MyLib::RootSignature(const std::string& name, const std::initializer_list<int>& fileName);
+template void MyLib::RootSignature(const std::string& name, const std::initializer_list<std::string>& fileName);
 
 // パイプのインスタンス
 void MyLib::PipeLine(const std::string& name, const std::string& rootName, const D3D12_PRIMITIVE_TOPOLOGY_TYPE& type, const std::initializer_list<unsigned int>& index, const bool& depth)
@@ -116,12 +120,14 @@ void MyLib::Instance(const Vec2& pos, const Vec2& size, void* parent)
 	swap  = std::make_shared<SwapChain>(win, queue);
 	rt    = std::make_unique<RenderTarget>(swap);
 
-	RootSignature("prim", { "MyLib/Shader/Primitive/PrimVS.hlsl", "MyLib/Shader/Primitive/PrimPS.hlsl" });
+	//RootSignature("prim", { "Shader/PrimVS.cso", "Shader/PrimPS.cso" });
+	RootSignature("prim", { PRIM_VS, PRIM_PS });
 	PipeLine("point",    "prim", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT,    { 0 }, false);
 	PipeLine("line",     "prim", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE,     { 0 }, false);
 	PipeLine("triangle", "prim", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0 }, false);
 
-	RootSignature("tex", { "MyLib/Shader/Texture/TexVS.hlsl", "MyLib/Shader/Texture/TexPS.hlsl" });
+	//RootSignature("tex", { "Shader/TexVS.cso", "Shader/TexPS.cso" });
+	RootSignature("tex", { TEX_VS, TEX_PS });
 	PipeLine("tex", "tex", D3D12_PRIMITIVE_TOPOLOGY_TYPE::D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, { 0, 1 }, false);
 }
 

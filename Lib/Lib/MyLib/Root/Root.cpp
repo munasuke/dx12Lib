@@ -45,6 +45,40 @@ long Root::Load(const std::string& fileName, ID3DBlob** blob)
 	return hr;
 }
 
+// リソース読み込み
+long Root::Read(const int& id, ID3DBlob** blob)
+{
+	// リソース情報取得
+	HRSRC rsc = FindResource(nullptr, MAKEINTRESOURCE(id), L"Shader");
+	if (rsc == nullptr)
+	{
+		func::DebugLog("リソース情報取得：失敗");
+		return S_FALSE;
+	}
+
+	// リソース読み込み
+	HANDLE handle = LoadResource(nullptr, rsc);
+	if (handle == nullptr)
+	{
+		func::DebugLog("リソース読み込み：失敗");
+		return S_FALSE;
+	}
+	
+	// データ取得
+	void* data = LockResource(handle);
+
+	// サイズ取得
+	size_t size = SizeofResource(nullptr, rsc);
+
+	auto hr = D3DSetBlobPart(data, size, D3D_BLOB_PART::D3D_BLOB_PRIVATE_DATA, 0, data, size, blob);
+	if (FAILED(hr))
+	{
+		return S_FALSE;
+	}
+
+	return hr;
+}
+
 // ルート情報取得
 long Root::RootInfo(ID3DBlob* blob)
 {
@@ -95,6 +129,18 @@ void Root::Vertex(const std::string& fileName)
 void Root::Pixel(const std::string& fileName)
 {
 	Load(fileName, &pixel);
+}
+
+void Root::Vertex(const int& id)
+{
+	Read(id, &vertex);
+	RootInfo(vertex);
+	CreateRoot();
+}
+
+void Root::Pixel(const int& id)
+{
+	Read(id, &pixel);
 }
 
 // ルート取得

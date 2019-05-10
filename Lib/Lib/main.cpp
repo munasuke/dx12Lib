@@ -4,12 +4,12 @@
 int main()
 {
 	MyLib lib(640);
-	//Primitive p(PrimitiveType::box);
-	//p.pos[0] = Vec2f(0.0f, 0.0f);
-	//p.pos[1] = Vec2f(100.0f, 0.0f);
-	//p.pos[2] = Vec2f(0.0f, 100.0f);
-	//p.pos[3] = Vec2f(100.0f, 100.0f);
-	//Vec3f color = Vec3f(1.0f, 0.0f, 0.0f);
+	Primitive p(PrimitiveType::box);
+	p.pos[0] = Vec2f(0.0f, 0.0f);
+	p.pos[1] = Vec2f(100.0f, 0.0f);
+	p.pos[2] = Vec2f(0.0f, 100.0f);
+	p.pos[3] = Vec2f(100.0f, 100.0f);
+	Vec3f color = Vec3f(1.0f, 0.0f, 0.0f);
 
 	Texture tex("Image/brides.png");
 
@@ -18,7 +18,7 @@ int main()
 	while (lib.CheckMsg() && !Input::Get().IsKey(Key::Escape))
 	{
 		lib.Clear();
-		//lib.Draw(p, color);
+		lib.Draw(p, color);
 		lib.Draw(tex);
 		lib.Execution();
 
@@ -33,7 +33,7 @@ int main()
 			tex.pos.x+=2.0f;
 		}
 
-		//tex.pos.y++;
+		tex.pos.y+=2.0f;
 	}
 
 	return 0;
