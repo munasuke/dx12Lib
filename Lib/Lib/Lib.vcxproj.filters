@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <FxCompile Include="MyLib\Shader\Primitive\Primitive.hlsl">
+      <Filter>リソース\Shader\Primitive</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Primitive\PrimPS.hlsl">
+      <Filter>リソース\Shader\Primitive</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Primitive\PrimVS.hlsl">
+      <Filter>リソース\Shader\Primitive</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Texture\TexPS.hlsl">
+      <Filter>リソース\Shader\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Texture\Texture.hlsl">
+      <Filter>リソース\Shader\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="MyLib\Shader\Texture\TexVS.hlsl">
+      <Filter>リソース\Shader\Texture</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MyLib\etc\Func.cpp">
+      <Filter>etc</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Descriptor\Descriptor.cpp">
+      <Filter>Descriptor</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Device\Device.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Fence\Fence.cpp">
+      <Filter>Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\List\List.cpp">
+      <Filter>List</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\MyLib.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Pipe\Pipe.cpp">
+      <Filter>Pipe</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Queue\Queue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\RenderTarget\RenderTarget.cpp">
+      <Filter>RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Root\Root.cpp">
+      <Filter>Root</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\SwapChain\SwapChain.cpp">
+      <Filter>SwapChain</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Window\Window.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Texture\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Texture\TexLoader.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Texture\WICTextureLoader12.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Primitive\Primitive.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\Input\Input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\FPS\FPS.cpp">
+      <Filter>FPS</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLib\FPS\FPSCounter.cpp">
+      <Filter>FPS</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MyLib\etc\Define.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Func.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Release.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Vector2.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\etc\Vector3.h">
+      <Filter>etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Descriptor\Descriptor.h">
+      <Filter>Descriptor</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Device\Device.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Fence\Fence.h">
+      <Filter>Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\List\List.h">
+      <Filter>List</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\MyLib.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Pipe\Pipe.h">
+      <Filter>Pipe</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Queue\Queue.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\RenderTarget\RenderTarget.h">
+      <Filter>RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Root\Root.h">
+      <Filter>Root</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\SwapChain\SwapChain.h">
+      <Filter>SwapChain</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Window\Window.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Texture\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Texture\TexLoader.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Texture\WICTextureLoader12.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Primitive\Primitive.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Input\Input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\Input\InputKey.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\FPS\FPS.h">
+      <Filter>FPS</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLib\FPS\FPSCounter.h">
+      <Filter>FPS</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="etc">
+      <UniqueIdentifier>{2eba8692-2249-4d1a-89e2-99b074f3df4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Descriptor">
+      <UniqueIdentifier>{eb44002b-399e-4743-883e-2b3dc5a0b7e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{5f0093c7-6372-4a3b-8651-9e3c1a935b98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fence">
+      <UniqueIdentifier>{5fe91914-1651-4b2d-97e8-8b60075f89bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="List">
+      <UniqueIdentifier>{84077dcf-7697-4b8f-ac02-23c773c18969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyLib">
+      <UniqueIdentifier>{a615f64d-0281-42c4-b228-77dc3ab87dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pipe">
+      <UniqueIdentifier>{e83a422c-c774-4342-a06e-3f0c457b4a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Queue">
+      <UniqueIdentifier>{356a7cf7-cfb0-42d4-8817-465314319b54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderTarget">
+      <UniqueIdentifier>{170b9da5-70f0-4e6b-b973-7b5abffcc499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Root">
+      <UniqueIdentifier>{d015f5eb-7560-4041-a704-a172be0401d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SwapChain">
+      <UniqueIdentifier>{0d30756d-1104-4376-9e3f-6b8c0f4f0fdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{bbc105bc-eb36-41db-8795-e30bf28bb00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{419dbf0c-48d3-4dde-a3b8-de9863e4dfd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitive">
+      <UniqueIdentifier>{2a4aa2e2-78d3-4022-b08c-f741626f4f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{fb6d2ea3-d554-40ad-b97a-bf410283f9ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FPS">
+      <UniqueIdentifier>{94af1187-d1ab-4081-ab6b-d528413669c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース">
+      <UniqueIdentifier>{ac692897-eef4-415d-94c8-5a91d5fad716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース\cso">
+      <UniqueIdentifier>{415841c2-b6f8-456f-baaf-87a603812b32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース">
+      <UniqueIdentifier>{93d4b401-9c3f-40b8-a387-10a37baaf868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー">
+      <UniqueIdentifier>{a89d6654-48e2-40d0-a901-c35636555e37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース\Shader">
+      <UniqueIdentifier>{56cd1a42-37ad-4776-afe6-6787da58999e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース\Shader\Primitive">
+      <UniqueIdentifier>{94b64d9c-b5a1-4f41-8564-f632a150582d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース\Shader\Texture">
+      <UniqueIdentifier>{e24a4e1a-3890-4589-87e6-ed5bee61311d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\PrimPS.cso">
+      <Filter>リソース\cso</Filter>
+    </None>
+    <None Include="Shader\PrimVS.cso">
+      <Filter>リソース\cso</Filter>
+    </None>
+    <None Include="Shader\TexPS.cso">
+      <Filter>リソース\cso</Filter>
+    </None>
+    <None Include="Shader\TexVS.cso">
+      <Filter>リソース\cso</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Lib.rc">
+      <Filter>リソース</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
