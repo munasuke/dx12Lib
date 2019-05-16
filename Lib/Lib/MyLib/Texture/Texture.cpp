@@ -27,6 +27,11 @@ Texture::Texture(const std::string& filePath) :
 	Load(filePath);
 }
 
+Texture::Texture(const Texture& tex)
+{
+	(*this) = tex;
+}
+
 // デストラクタ
 Texture::~Texture()
 {
@@ -204,4 +209,19 @@ long Texture::WriteSubResource(const std::string& path, const size_t& index)
 Vec2f Texture::GetTexSize(const std::string& filePath) const
 {
 	return TexLoader::Get().GetSize(filePath);
+}
+
+void Texture::operator=(const Texture& tex)
+{
+	rsc.resize(RSC_MAX);
+
+	pos       = tex.pos;
+	size      = tex.size;
+	offsetPos = tex.offsetPos;
+	divSize   = tex.divSize;
+	filePath  = tex.filePath;
+
+	rsc[0] = TexLoader::Get().GetRsc(filePath);
+
+	Init();
 }

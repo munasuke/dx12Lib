@@ -38,6 +38,7 @@ class Texture
 public:
 	Texture();
 	Texture(const std::string& filePath);
+	Texture(const Texture& tex);
 	~Texture();
 
 	// “Ç‚İ‚İ
@@ -60,6 +61,8 @@ public:
 
 	// ‰æ‘œ‚Ì•ªŠ„ƒTƒCƒY
 	Vec2f divSize;
+
+	void operator=(const Texture& tex);
 private:
 	// ‰Šú‰»
 	int Init();
