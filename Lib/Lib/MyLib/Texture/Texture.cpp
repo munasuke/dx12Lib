@@ -221,7 +221,5 @@ void Texture::operator=(const Texture& tex)
 	divSize   = tex.divSize;
 	filePath  = tex.filePath;
 
-	rsc[0] = TexLoader::Get().GetRsc(filePath);
-
-	Init();
+	Load(filePath);
 }
