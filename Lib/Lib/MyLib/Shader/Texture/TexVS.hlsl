@@ -8,7 +8,9 @@ Out main(Input input)
 
 	input.pos    = mul(mat, input.pos);
 	input.pos.xy = input.pos.xy / (float2(window.x, -window.x) / 2) + float2(-1, 1);
-	input.uv     = (fmod((input.uv + reverse), 2.0f) * uvSize + uvPos) / size;
+	float2 tmp = (fmod((input.uv + reverse), 2.0f) * uvSize + uvPos) / size;
+	input.uv = tmp;
+	//input.uv = int2(tmp.x, tmp.y);
 
 	Out o;
 	o.svpos = input.pos;
