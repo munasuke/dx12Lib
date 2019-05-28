@@ -253,6 +253,8 @@ void MyLib::Draw(Primitive& prim, const Vec3f& color, const float alpha)
 
 	constant->alpha = alpha;
 	constant->color = color;
+	prim.cData->color = { color.x, color.y, color.z, alpha };
+	prim.cData->winSize = { float(GetWinSize().x), float(GetWinSize().y) };
 
 	D3D12_VERTEX_BUFFER_VIEW view{};
 	view.BufferLocation = prim.rsc->GetGPUVirtualAddress();
@@ -260,8 +262,8 @@ void MyLib::Draw(Primitive& prim, const Vec3f& color, const float alpha)
 	view.StrideInBytes  = sizeof(prim.pos[0]);
 	list->VertexView(view);
 
-	list->SetHeap(&heap, 1);
-	list->GraphicTable(0, heap, 0);
+	list->SetHeap(&prim.heap, 1);
+	list->GraphicTable(0, prim.heap, 0);
 
 	list->Topology(D3D12_PRIMITIVE_TOPOLOGY(prim.type));
 

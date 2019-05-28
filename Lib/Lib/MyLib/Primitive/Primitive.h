@@ -16,9 +16,16 @@ enum class PrimitiveType {
 class Primitive
 {
 	friend MyLib;
+	struct Data
+	{
+		DirectX::XMFLOAT4 color;
+		DirectX::XMFLOAT2 winSize;
+	};
 public:
 	// 頂点データ
 	std::vector<Vec3f>pos;
+	// 色
+	DirectX::XMFLOAT4 color;
 
 
 	// コンストラクタ
@@ -46,9 +53,14 @@ private:
 
 	// リソース
 	ID3D12Resource* rsc;
+	ID3D12Resource* cRsc;
+
+	// ヒープ
+	ID3D12DescriptorHeap* heap;
 
 	// 送信データ
 	void* data;
+	Data* cData;
 
 	// タイプ
 	int type;
