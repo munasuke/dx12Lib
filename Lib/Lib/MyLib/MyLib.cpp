@@ -39,7 +39,8 @@ MyLib::MyLib(const Vec2& size, const Vec2& pos)
 
 	Init();
 
-	constant->winSize = Vec2f(float(size.x), float(size.y));
+	winSize = Vec2f(float(size.x), float(size.y));
+	//constant->winSize = Vec2f(float(size.x), float(size.y));
 
 	Instance(pos, size, nullptr);
 }
@@ -49,7 +50,8 @@ MyLib::MyLib(const MyLib& lib, const Vec2& size, const Vec2& pos)
 {
 	Init();
 
-	constant->winSize = Vec2f(float(size.x), float(size.y));
+	winSize = Vec2f(float(size.x), float(size.y));
+	//constant->winSize = Vec2f(float(size.x), float(size.y));
 
 	Instance(pos, size, lib.win->Get());
 }
@@ -59,7 +61,8 @@ MyLib::MyLib(std::weak_ptr<MyLib>lib, const Vec2& size, const Vec2& pos)
 {
 	Init();
 
-	constant->winSize = Vec2f(float(size.x), float(size.y));
+	winSize = Vec2f(float(size.x), float(size.y));
+	//constant->winSize = Vec2f(float(size.x), float(size.y));
 
 	Instance(pos, size, lib.lock()->win->Get());
 }
@@ -142,7 +145,7 @@ void MyLib::Init()
 	rsc      = nullptr;
 	constant = nullptr;
 
-	CreateRes();
+	//CreateRes();
 }
 
 // ƒŠƒ\[ƒX¶¬
@@ -251,8 +254,8 @@ void MyLib::Draw(Primitive& prim, const Vec3f& color, const float alpha)
 		break;
 	}
 
-	constant->alpha = alpha;
-	constant->color = color;
+	//constant->alpha = alpha;
+	//constant->color = color;
 	prim.cData->color = { color.x, color.y, color.z, alpha };
 	prim.cData->winSize = { float(GetWinSize().x), float(GetWinSize().y) };
 
@@ -273,26 +276,29 @@ void MyLib::Draw(Primitive& prim, const Vec3f& color, const float alpha)
 // ‰æ‘œ•`‰æ
 void MyLib::Draw(Texture& tex, const float alpha, const bool turnX, const bool turnY)
 {
-	tex.vert[0] = { Vec3f(0.0f, 0.0f),                       Vec2f(0.0f, 0.0f) };
-	tex.vert[1] = { Vec3f(Vec2f(constant->winSize.x, 0.0f)), Vec2f(1.0f, 0.0f) };
-	tex.vert[2] = { Vec3f(Vec2f(0.0f, constant->winSize.y)), Vec2f(0.0f, 1.0f) };
-	tex.vert[3] = { Vec3f(constant->winSize),                Vec2f(1.0f) };
+	tex.cData->alpha   = alpha;
+	tex.cData->winSize = Vec2f(float(GetWinSize().x), float(GetWinSize().y));
+
+	tex.vert[0] = { Vec3f(0.0f, 0.0f),                        Vec2f(0.0f, 0.0f) };
+	tex.vert[1] = { Vec3f(Vec2f(tex.cData->winSize.x, 0.0f)), Vec2f(1.0f, 0.0f) };
+	tex.vert[2] = { Vec3f(Vec2f(0.0f, tex.cData->winSize.y)), Vec2f(0.0f, 1.0f) };
+	tex.vert[3] = { Vec3f(tex.cData->winSize),                Vec2f(1.0f) };
 
 	memcpy(tex.data, tex.vert.data(), sizeof(tex.vert[0]) * tex.vert.size());
 
-	constant->alpha = alpha;
+	//constant->alpha = alpha;
 	tex.reverse = Vec2f(turnX ? 1.0f : 0.0f, turnY ? 1.0f : 0.0f);
 
 	DirectX::XMStoreFloat4x4(&tex.con->matrix, DirectX::XMMatrixAffineTransformation2D(
-		DirectX::XMLoadFloat2(&Convert2(tex.size / constant->winSize)),
+		DirectX::XMLoadFloat2(&Convert2(tex.size / tex.cData->winSize)),
 		DirectX::XMLoadFloat2(&Convert2(tex.size / 2.0f)),
 		tex.rotate,
 		DirectX::XMLoadFloat3(&Convert3(tex.pos))
 	));
 
-	unsigned int index = tex.SetDraw(list, root["tex"], pipe["tex"]);
-	list->SetHeap(&heap, 1);
-	list->GraphicTable(index, heap, 0);
+
+	tex.SetDraw(list, root["tex"], pipe["tex"]);
+	//list->GraphicTable(index, tex.heap, index);
 
 	tex.Draw(list);
 }

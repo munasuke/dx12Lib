@@ -103,4 +103,7 @@ private:
 
 	// ’è”ƒf[ƒ^
 	Constant* constant;
+
+	// winSize
+	Vec2f winSize;
 };

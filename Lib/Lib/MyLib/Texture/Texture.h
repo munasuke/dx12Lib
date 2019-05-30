@@ -35,6 +35,13 @@ class Texture
 		Vec2f reverse;
 	};
 
+	struct ConstantData
+	{
+		Vec3f color;
+		float alpha;
+		Vec2f winSize;
+	};
+
 public:
 	Texture();
 	Texture(const std::string& filePath);
@@ -69,6 +76,7 @@ private:
 
 	// 定数リソース生成
 	long CreateCB(const unsigned int index);
+	long CreateCB2(const unsigned int index);
 
 	// 頂点リソース生成
 	long CreateVB(const unsigned int index);
@@ -102,4 +110,7 @@ private:
 
 	// ファイルパス
 	std::string filePath;
+
+	ConstantData* cData;
+	ID3D12Resource* cRsc;
 };

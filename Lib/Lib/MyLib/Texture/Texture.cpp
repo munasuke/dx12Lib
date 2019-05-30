@@ -7,11 +7,11 @@
 #include "../etc/Release.h"
 #include <d3d12.h>
 
-#define RSC_MAX 3
+#define RSC_MAX 4
 #define VERT_MAX 4
 
 Texture::Texture() :
-	heap(nullptr), con(nullptr), data(nullptr)
+	heap(nullptr), con(nullptr), data(nullptr), cData(nullptr), cRsc(nullptr)
 {
 	rsc.assign(RSC_MAX, nullptr);
 	vert.assign(VERT_MAX, Vertex());
@@ -19,7 +19,7 @@ Texture::Texture() :
 
 // コンストラクタ
 Texture::Texture(const std::string& filePath) :
-	heap(nullptr), con(nullptr), data(nullptr)
+	heap(nullptr), con(nullptr), data(nullptr), cData(nullptr), cRsc(nullptr)
 {
 	rsc.assign(RSC_MAX, nullptr);
 	vert.assign(VERT_MAX, Vertex());
@@ -118,6 +118,15 @@ int Texture::Init()
 	Desc.Map(rsc[index], (void**)(&con));
 
 	++index;
+	if (FAILED(CreateCB2(index)))
+	{
+		func::DebugLog("定数リソース生成：失敗");
+		return -1;
+	}
+	Desc.CBV(rsc[index], heap, index);
+	Desc.Map(rsc[index], (void**)(&cData));
+
+	++index;
 	if (FAILED(CreateVB(index)))
 	{
 		func::DebugLog("頂点リソース生成：失敗");
@@ -159,6 +168,26 @@ long Texture::CreateCB(const unsigned int index)
 	dsc.Width            = (sizeof(Constant) + 0xff) &~ 0xff;
 
 	return Descriptor::Get().CreateRsc(&rsc[index], hProp, dsc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+}
+long Texture::CreateCB2(const unsigned int index)
+{
+	D3D12_HEAP_PROPERTIES prop{};
+	prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY::D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+	prop.MemoryPoolPreference = D3D12_MEMORY_POOL::D3D12_MEMORY_POOL_UNKNOWN;
+	prop.Type                 = D3D12_HEAP_TYPE::D3D12_HEAP_TYPE_UPLOAD;
+
+	D3D12_RESOURCE_DESC desc{};
+	desc.DepthOrArraySize = 1;
+	desc.Dimension        = D3D12_RESOURCE_DIMENSION::D3D12_RESOURCE_DIMENSION_BUFFER;
+	desc.Flags            = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE;
+	desc.Format           = DXGI_FORMAT::DXGI_FORMAT_UNKNOWN;
+	desc.Height           = 1;
+	desc.Layout           = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	desc.MipLevels        = 1;
+	desc.SampleDesc       = { 1, 0 };
+	desc.Width            = (sizeof(ConstantData) + 0xff) & ~0xff;
+
+	return Descriptor::Get().CreateRsc(&rsc[index], prop, desc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 }
 
 // 頂点リソース生成
