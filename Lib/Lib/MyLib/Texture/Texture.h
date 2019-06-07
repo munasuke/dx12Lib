@@ -51,6 +51,8 @@ public:
 	// “Ç‚İ‚İ
 	int Load(const std::string& filePath);
 
+	void Delete(const std::string& filePath);
+
 	// •`‰æ
 	void Draw(std::weak_ptr<List> list);
 

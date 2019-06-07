@@ -61,6 +61,11 @@ int Texture::Load(const std::string& filePath)
 	return 0;
 }
 
+void Texture::Delete(const std::string& filePath)
+{
+	TexLoader::Get().Delete(filePath);
+}
+
 // •`‰æ€”õ
 unsigned int Texture::SetDraw(std::weak_ptr<List> list, std::weak_ptr<Root> root, std::weak_ptr<Pipe> pipe)
 {
