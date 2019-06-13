@@ -42,7 +42,7 @@ long __stdcall Window::WindowProc(void* hWnd, unsigned int message, unsigned int
 }
 
 // 初期化
-void Window::Init(void)
+void Window::Init()
 {
 	handle   = nullptr;
 	instance = nullptr;
@@ -60,8 +60,8 @@ int Window::CreateWnd(const Vec2& pos, const Vec2& size, void* parent)
 	wnd.hIconSm       = LoadIcon(GetModuleHandle(0), nullptr);
 	wnd.hInstance     = GetModuleHandle(0);
 	wnd.lpfnWndProc   = WNDPROC(WindowProc);
-	wnd.lpszClassName = _T("おかもん");
-	wnd.lpszMenuName  = _T("おかもん");
+	wnd.lpszClassName = _T("lib");
+	wnd.lpszMenuName  = _T("lib");
 	wnd.style = CS_HREDRAW | CS_VREDRAW;
 	RegisterClassEx(&wnd);
 
@@ -72,7 +72,7 @@ int Window::CreateWnd(const Vec2& pos, const Vec2& size, void* parent)
 	rect.right  = static_cast<long>(size.x);
 	AdjustWindowRect(&rect, flag, false);
 
-	handle = CreateWindowEx(WS_EX_ACCEPTFILES, wnd.lpszClassName, _T("おかもん"), flag, pos.x, pos.y,
+	handle = CreateWindowEx(WS_EX_ACCEPTFILES, wnd.lpszClassName, _T("lib"), flag, pos.x, pos.y,
 		(rect.right - rect.left), (rect.bottom - rect.top), HWND(parent), nullptr, wnd.hInstance, nullptr);
 	if (handle == nullptr)
 	{
@@ -89,7 +89,7 @@ int Window::CreateWnd(const Vec2& pos, const Vec2& size, void* parent)
 }
 
 // ウィンドウハンドル取得
-void* Window::Get(void) const
+void* Window::Get() const
 {
 	return handle;
 }

@@ -184,7 +184,7 @@ void MyLib::ChangeTitle(const std::string& title) const
 }
 
 // ウィンドウ座標取得
-Vec2 MyLib::GetWinPos(void) const
+Vec2 MyLib::GetWinPos() const
 {
 	RECT rect{};
 	GetWindowRect(HWND(win->Get()), &rect);
@@ -192,15 +192,35 @@ Vec2 MyLib::GetWinPos(void) const
 }
 
 // ウィンドウサイズ取得
-Vec2 MyLib::GetWinSize(void) const
+Vec2 MyLib::GetWinSize() const
 {
 	RECT rect{};
 	GetClientRect(HWND(win->Get()), &rect);
 	return Vec2(int(rect.right), int(rect.bottom));
 }
 
+// カーソル座標取得
+Vec2 MyLib::GetMousePos() const
+{
+	POINT point{};
+	GetCursorPos(&point);
+	return Vec2(int(point.x), int(point.y));
+}
+
+// カーソルクライアント座標取得
+Vec2 MyLib::GetMousePosClient() const
+{
+	POINT point{};
+	point.x = long(GetMousePos().x);
+	point.y = long(GetMousePos().y);
+
+	ScreenToClient(HWND(win->Get()), &point);
+
+	return Vec2(int(point.x), int(point.y));
+}
+
 // メッセージ確認
-bool MyLib::CheckMsg(void) const
+bool MyLib::CheckMsg() const
 {
 	static MSG msg{};
 
@@ -222,7 +242,7 @@ bool MyLib::CheckMsg(void) const
 }
 
 // 画面クリア
-void MyLib::Clear(void) const
+void MyLib::Clear() const
 {
 	list->Reset();
 
@@ -304,7 +324,7 @@ void MyLib::Draw(Texture& tex, const float alpha, const bool turnX, const bool t
 }
 
 // 実行
-void MyLib::Execution(void) const
+void MyLib::Execution() const
 {
 	list->Barrier(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT, rt->GetRsc());
 

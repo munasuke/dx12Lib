@@ -37,7 +37,7 @@ void Queue::Execution(ID3D12CommandList** list, const size_t& num) const
 }
 
 //ƒLƒ…[æ“¾
-ID3D12CommandQueue* Queue::Get(void) const
+ID3D12CommandQueue* Queue::Get() const
 {
 	return queue;
 }

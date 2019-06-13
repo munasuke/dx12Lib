@@ -29,16 +29,22 @@ public:
 	void ChangeTitle(const std::string& title) const;
 
 	// ウィンドウ座標取得
-	Vec2 GetWinPos(void) const;
+	Vec2 GetWinPos() const;
 
 	// ウィンドウサイズ取得
-	Vec2 GetWinSize(void) const;
+	Vec2 GetWinSize() const;
+
+	// カーソル座標取得
+	Vec2 GetMousePos()const;
+
+	// カーソルクライアント座標取得
+	Vec2 GetMousePosClient()const;
 
 	// メッセージ確認
-	bool CheckMsg(void) const;
+	bool CheckMsg() const;
 
 	// 画面クリア
-	void Clear(void) const;
+	void Clear() const;
 
 	// プリミティブ描画
 	void Draw(Primitive& prim, const Vec3f& color, const float alpha = 1.0f);
@@ -47,7 +53,7 @@ public:
 	void Draw(Texture& tex, const float alpha = 1.0f, const bool turnX = false, const bool turnY = false);
 
 	// 実行
-	void Execution(void) const;
+	void Execution() const;
 
 private:
 	MyLib(const MyLib&) = delete;

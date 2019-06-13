@@ -13,15 +13,15 @@ public:
 
 
 	// コンストラクタ
-	inline constexpr Vector2() {
+	Vector2() {
 		x = T(0);
 		y = T(0);
 	}
-	inline constexpr Vector2(const T& i) {
+	Vector2(const T& i) {
 		x = i;
 		y = i;
 	}
-	inline constexpr Vector2(const T& x, const T& y) {
+	Vector2(const T& x, const T& y) {
 		this->x = x;
 		this->y = y;
 	}
@@ -30,153 +30,153 @@ public:
 	}
 
 	// 長さ
-	inline T Length(void) const {
+	T Length() const {
 		return std::sqrt(x * x + y * y);
 	}
 
 	// 内積
-	inline constexpr T Dot(const Vector2<T> & vec) const {
+	T Dot(const Vector2<T> & vec) const {
 		return (x * vec.x + y * vec.y);
 	}
 
 	// 距離
-	inline T Distance(const Vector2<T> & vec) const {
+	T Distance(const Vector2<T> & vec) const {
 		return std::hypot(vec.x - x, vec.y - y);
 	}
 
 	// 正規化
-	inline constexpr Vector2<T> Normalized(void) const {
+	Vector2<T> Normalized() const {
 		return Vector2<T>(x / Length(), y / Length());
 	}
 
 	// 演算子オーバーロード
 
-	inline constexpr bool operator==(const T & i) const {
+	bool operator==(const T & i) const {
 		return (x == i && y == i);
 	}
-	inline constexpr bool operator!=(const T & i) const {
+	bool operator!=(const T & i) const {
 		return !(x == i && y == i);
 	}
-	inline constexpr bool operator==(const Vector2<T> & vec) const {
+	bool operator==(const Vector2<T> & vec) const {
 		return (x == vec.x && y == vec.y);
 	}
-	inline constexpr bool operator!=(const Vector2<T> & vec) const {
+	bool operator!=(const Vector2<T> & vec) const {
 		return !(x == vec.x && y == vec.y);
 	}
 
-	inline constexpr bool operator<(const T & i) const {
+	bool operator<(const T & i) const {
 		return (x < i && y < i);
 	}
-	inline constexpr bool operator>(const T & i) const {
+	bool operator>(const T & i) const {
 		return (x > i && y > i);
 	}
-	inline constexpr bool operator<(const Vector2<T> & vec) const {
+	bool operator<(const Vector2<T> & vec) const {
 		return (x < vec.x && y < vec.y);
 	}
-	inline constexpr bool operator>(const Vector2<T> & vec) const {
+	bool operator>(const Vector2<T> & vec) const {
 		return (x > vec.x && y > vec.y);
 	}
 
-	inline constexpr bool operator<=(const T & i) const {
+	bool operator<=(const T & i) const {
 		return (x <= i && y <= i);
 	}
-	inline constexpr bool operator>=(const T & i) const {
+	bool operator>=(const T & i) const {
 		return (x >= i && y >= i);
 	}
-	inline constexpr bool operator<=(const Vector2<T> & vec) const {
+	bool operator<=(const Vector2<T> & vec) const {
 		return (x <= vec.x && y <= vec.y);
 	}
-	inline constexpr bool operator>=(const Vector2<T> & vec) const {
+	bool operator>=(const Vector2<T> & vec) const {
 		return (x >= vec.x && y >= vec.y);
 	}
 
-	inline constexpr void operator=(const T & i) {
+	void operator=(const T & i) {
 		x = i;
 		y = i;
 	}
-	inline constexpr void operator+=(const T & i) {
+	void operator+=(const T & i) {
 		x += i;
 		y += i;
 	}
-	inline constexpr void operator-=(const T & i) {
+	void operator-=(const T & i) {
 		x -= i;
 		y -= i;
 	}
-	inline constexpr void operator*=(const T & i) {
+	void operator*=(const T & i) {
 		x *= i;
 		y *= i;
 	}
-	inline constexpr void operator/=(const T & i) {
+	void operator/=(const T & i) {
 		x /= i;
 		y /= i;
 	}
-	inline constexpr void operator=(const Vector2<T> & vec) {
+	void operator=(const Vector2<T> & vec) {
 		x = vec.x;
 		y = vec.y;
 	}
-	inline constexpr void operator+=(const Vector2<T> & vec) {
+	void operator+=(const Vector2<T> & vec) {
 		x += vec.x;
 		y += vec.y;
 	}
-	inline constexpr void operator-=(const Vector2<T> & vec) {
+	void operator-=(const Vector2<T> & vec) {
 		x -= vec.x;
 		y -= vec.y;
 	}
-	inline constexpr void operator*=(const Vector2<T> & vec) {
+	void operator*=(const Vector2<T> & vec) {
 		x *= vec.x;
 		y *= vec.y;
 	}
-	inline constexpr void operator/=(const Vector2<T> & vec) {
+	void operator/=(const Vector2<T> & vec) {
 		x /= vec.x;
 		y /= vec.y;
 	}
 
-	inline constexpr Vector2<T> operator+(void) const {
+	Vector2<T> operator+() const {
 		return *this;
 	}
-	inline constexpr Vector2<T> operator-(void) const {
+	Vector2<T> operator-() const {
 		return Vector2<T>(-x, -y);
 	}
-	inline constexpr Vector2<T> operator+(const T & i) const {
+	Vector2<T> operator+(const T & i) const {
 		return Vector2<T>(x + i, y + i);
 	}
-	inline constexpr Vector2<T> operator-(const T & i) const {
+	Vector2<T> operator-(const T & i) const {
 		return Vector2<T>(x - i, y - i);
 	}
-	inline constexpr Vector2<T> operator*(const T & i) const {
+	Vector2<T> operator*(const T & i) const {
 		return Vector2<T>(x * i, y * i);
 	}
-	inline constexpr Vector2<T> operator/(const T & i) const {
+	Vector2<T> operator/(const T & i) const {
 		return Vector2<T>(x / i, y / i);
 	}
-	inline constexpr Vector2<T> operator+(const Vector2<T> & vec) const {
+	Vector2<T> operator+(const Vector2<T> & vec) const {
 		return Vector2<T>(x + vec.x, y + vec.y);
 	}
-	inline constexpr Vector2<T> operator-(const Vector2<T> & vec) const {
+	Vector2<T> operator-(const Vector2<T> & vec) const {
 		return Vector2<T>(x - vec.x, y - vec.y);
 	}
-	inline constexpr Vector2<T> operator*(const Vector2<T> & vec) const {
+	Vector2<T> operator*(const Vector2<T> & vec) const {
 		return Vector2<T>(x * vec.x, y * vec.y);
 	}
-	inline constexpr Vector2<T> operator/(const Vector2<T> & vec) const {
+	Vector2<T> operator/(const Vector2<T> & vec) const {
 		return Vector2<T>(x / vec.x, y / vec.y);
 	}
 };
 
 template<typename T>
-inline constexpr Vector2<T> operator+(const T & i, const Vector2<T> & vec) {
+Vector2<T> operator+(const T & i, const Vector2<T> & vec) {
 	return Vector2<T>(i + vec.x, i + vec.y);
 }
 template<typename T>
-inline constexpr Vector2<T> operator-(const T & i, const Vector2<T> & vec) {
+Vector2<T> operator-(const T & i, const Vector2<T> & vec) {
 	return Vector2<T>(i - vec.x, i - vec.y);
 }
 template<typename T>
-inline constexpr Vector2<T> operator*(const T & i, const Vector2<T> & vec) {
+Vector2<T> operator*(const T & i, const Vector2<T> & vec) {
 	return Vector2<T>(i * vec.x, i * vec.y);
 }
 template<typename T>
-inline constexpr Vector2<T> operator/(const T & i, const Vector2<T> & vec) {
+Vector2<T> operator/(const T & i, const Vector2<T> & vec) {
 	return Vector2<T>(i / vec.x, i / vec.y);
 }
 

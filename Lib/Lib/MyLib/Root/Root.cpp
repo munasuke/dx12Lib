@@ -92,7 +92,7 @@ long Root::RootInfo(ID3DBlob* blob)
 }
 
 // ルートシグネチャ生成
-long Root::CreateRoot(void)
+long Root::CreateRoot()
 {
 	auto hr = Dev->CreateRootSignature(0, sig->GetBufferPointer(), sig->GetBufferSize(), IID_PPV_ARGS(&root));
 	if (FAILED(hr))
@@ -144,19 +144,19 @@ void Root::Pixel(const int& id)
 }
 
 // ルート取得
-ID3D12RootSignature* Root::Get(void) const
+ID3D12RootSignature* Root::Get() const
 {
 	return root;
 }
 
 // 頂点シェーダ取得
-ID3DBlob* Root::Vertex(void) const
+ID3DBlob* Root::Vertex() const
 {
 	return vertex;
 }
 
 // ピクセルシェーダ取得
-ID3DBlob* Root::Pixel(void) const
+ID3DBlob* Root::Pixel() const
 {
 	return pixel;
 }

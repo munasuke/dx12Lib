@@ -10,7 +10,7 @@ public:
 	~Window();
 
 	// ウィンドウハンドル取得
-	void* Get(void) const;
+	void* Get() const;
 
 private:
 	Window(const Window&) = delete;
@@ -24,7 +24,7 @@ private:
 #endif
 
 	// 初期化
-	void Init(void);
+	void Init();
 
 	// ウィンドウ生成
 	int CreateWnd(const Vec2& pos, const Vec2& size, void* parent);

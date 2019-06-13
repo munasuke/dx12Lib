@@ -38,7 +38,7 @@ Primitive::~Primitive()
 }
 
 // 初期化
-void Primitive::Init(void)
+void Primitive::Init()
 {
 	rsc  = nullptr;
 	cRsc = nullptr;
@@ -113,7 +113,7 @@ void Primitive::Reset(const PrimitiveType& type, const unsigned int& num)
 }
 
 // データ更新
-void Primitive::UpData(void) const
+void Primitive::UpData() const
 {
 	memcpy(data, pos.data(), sizeof(pos[0]) * pos.size());
 }

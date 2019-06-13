@@ -13,7 +13,7 @@ public:
 	void Execution(ID3D12CommandList** list, const size_t& num) const;
 
 	//ƒLƒ…[æ“¾
-	ID3D12CommandQueue* Get(void) const;
+	ID3D12CommandQueue* Get() const;
 
 private:
 	Queue(const Queue&) = delete;

@@ -45,10 +45,10 @@ public:
 
 private:
 	// 初期化
-	void Init(void);
+	void Init();
 
 	// データ更新
-	void UpData(void) const;
+	void UpData() const;
 
 
 	// リソース

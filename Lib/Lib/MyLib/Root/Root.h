@@ -24,11 +24,11 @@ public:
 	void Pixel(const int& id);
 
 	// ルート取得
-	ID3D12RootSignature* Get(void) const;
+	ID3D12RootSignature* Get() const;
 	// 頂点シェーダ取得
-	ID3DBlob* Vertex(void) const;
+	ID3DBlob* Vertex() const;
 	// ピクセルシェーダ取得
-	ID3DBlob* Pixel(void) const;
+	ID3DBlob* Pixel() const;
 
 private:
 	Root(const Root&) = delete;
@@ -47,7 +47,7 @@ private:
 	long RootInfo(ID3DBlob* blob);
 
 	// ルートシグネチャ生成
-	long CreateRoot(void);
+	long CreateRoot();
 
 
 	// ルート

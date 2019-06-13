@@ -10,7 +10,7 @@ public:
 	~Pipe();
 
 	// パイプライン取得
-	ID3D12PipelineState* Get(void) const;
+	ID3D12PipelineState* Get() const;
 
 private:
 	Pipe(const Pipe&) = delete;

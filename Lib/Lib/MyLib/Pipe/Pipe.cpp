@@ -93,7 +93,7 @@ long Pipe::CreatePipe(const D3D12_INPUT_ELEMENT_DESC& input, const size_t& num, 
 }
 
 // パイプライン取得
-ID3D12PipelineState* Pipe::Get(void) const
+ID3D12PipelineState* Pipe::Get() const
 {
 	return pipe;
 }
