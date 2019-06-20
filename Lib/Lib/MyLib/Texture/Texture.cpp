@@ -248,12 +248,22 @@ Vec2f Texture::GetTexSize(const std::string& filePath) const
 void Texture::operator=(const Texture& tex)
 {
 	rsc.resize(RSC_MAX);
+	vert.resize(VERT_MAX);
+
+	filePath = tex.filePath;
+	//if (FAILED(TexLoader::Get().Load(filePath)))
+	//{
+	//	return;
+	//}
+
+	//rsc[0] = TexLoader::Get().GetRsc(filePath);
+	//rotate = 0;
 
 	pos       = tex.pos;
 	size      = tex.size;
 	offsetPos = tex.offsetPos;
 	divSize   = tex.divSize;
-	filePath  = tex.filePath;
 
 	Load(filePath);
+	//Init();
 }
