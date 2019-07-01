@@ -114,5 +114,4 @@ private:
 	std::string filePath;
 
 	ConstantData* cData;
-	ID3D12Resource* cRsc;
 };

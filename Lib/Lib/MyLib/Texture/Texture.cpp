@@ -11,7 +11,7 @@
 #define VERT_MAX 4
 
 Texture::Texture() :
-	heap(nullptr), con(nullptr), data(nullptr), cData(nullptr), cRsc(nullptr)
+	heap(nullptr), con(nullptr), data(nullptr), cData(nullptr)
 {
 	rsc.assign(RSC_MAX, nullptr);
 	vert.assign(VERT_MAX, Vertex());
@@ -19,7 +19,7 @@ Texture::Texture() :
 
 // コンストラクタ
 Texture::Texture(const std::string& filePath) :
-	heap(nullptr), con(nullptr), data(nullptr), cData(nullptr), cRsc(nullptr)
+	heap(nullptr), con(nullptr), data(nullptr), cData(nullptr)
 {
 	rsc.assign(RSC_MAX, nullptr);
 	vert.assign(VERT_MAX, Vertex());
