@@ -35,9 +35,9 @@ Texture::Texture(const Texture& tex)
 // デストラクタ
 Texture::~Texture()
 {
-	for (auto& r : rsc)
+	for (unsigned int i = 1; i < rsc.size(); ++i)
 	{
-		Release(r);
+		Release(rsc[i]);
 	}
 	Release(heap);
 }

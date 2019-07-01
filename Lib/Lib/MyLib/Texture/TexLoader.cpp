@@ -9,6 +9,9 @@ TexLoader::TexLoader()
 
 TexLoader::~TexLoader()
 {
+	rsc.clear();
+	dec.clear();
+	sub.clear();
 }
 
 TexLoader& TexLoader::Get()
